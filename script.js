@@ -5,7 +5,7 @@ const startBtn = document.getElementById('startBtn');
 const musicBtn = document.getElementById('musicBtn');
 const audio = document.getElementById('backsound');
 
-let musikNyala = true;
+let musikNyala = false;
 
 musicBtn.addEventListener('click', () => {
     if (musikNyala) {
