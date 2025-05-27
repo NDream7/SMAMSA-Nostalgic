@@ -1,4 +1,4 @@
-const nama_siswa_kelas_12IPS = ['Fairus', 'Fatimah', 'Hari', 'Karmila', 'Insan', 'Milano', 'Zeihan', 'Rauf', 'Nailah', 'Putri', 'Kurnia', 'Safwana', 'Shidqi', 'Syaira', 'Ujang']
+const nama_siswa_kelas_12IPS = ['Fairuz', 'Fatimah', 'Hari', 'Karmila', 'Insan', 'Milano', 'Zeihan', 'Rauf', 'Nailah', 'Putri', 'Kurnia', 'Safwana', 'Shidqi', 'Syaira', 'Ujang']
 const nama_siswa_kelas_12MIPA = ['Aisyah', 'Aldi', 'Aliffa', 'Arsya', 'Fatma', 'Maurel', 'Abim', 'Mutia', 'Nabilla', 'Mega', 'Nikita', 'Raihan', 'Dwi', 'Salwa', 'Sofi', 'Susan', 'Syahrani']
 
 const startBtn = document.getElementById('startBtn');
