@@ -18,55 +18,69 @@ musicBtn.addEventListener('click', () => {
     musikNyala = !musikNyala;
 });
 
-startBtn.addEventListener('click', () => {
-    alert('Selamat datang di web Kelas 12 SMA Muhammadiyah 1 Bandung')
-
-    function tanya(pertanyaan) {
-        const jawab = prompt(pertanyaan)
-        if (jawab === null || jawab.trim() === '') {
-            alert('Yaahh udah mau pergi lagi yaa? Yaudah deh gapapaa, jangan lupa mampir lagi yaa :)')
+function tanya(pertanyaan) {
+    const jawab = prompt(pertanyaan)
+    if (jawab === null || jawab.trim() === '') {
+        const konfirmasi = confirm('Yaahh, udah mau pergiii?');    
+        if (konfirmasi) {   
+            alert('Yaahh, yaudah deh gapapaa, jangan lupa mampir lagi yaa :)')
             throw new Error('Prompt dibatalkan user.')
-        }
-        return jawab.trim()
-    }
-    
-    try {
-        let asal_sekolah = tanya('Kamu dari SMA manaaa?').trim().toLowerCase();
-    
-        if (asal_sekolah == 'sma muhammadiyah 1 bandung') {
-            asal_sekolah = 'Murid Kesayangan'
-            alert(`Selamat datang kembaliii ${asal_sekolah} para guru, wkwkwk`);
-    
-            let kelas = tanya('Kamu dari kelas apa niiihh???(IPS atau MIPA)').trim().toLowerCase();
-           
-            if (kelas === 'ips') {
-                alert(`owh kamu dari kelas ${kelas}, berarti kamu salah satu dari:\n${nama_siswa_kelas_12IPS.map(nama => '- ' + nama).join('\n')}\ndoonngg?`)
-                let nama = tanya('Kalau gitu nama kamu siapa niicchh?').trim()
-
-                const found = nama_siswa_kelas_12IPS.find(n => n.toLowerCase() === nama.toLowerCase());
-                if (found){
-                    alert(`Haaiii ${nama}, apa kabarnyaaa? semoga baik baik ajaaa, selamat bernostalgia di web Angkatan Kelas 12 SMA Muhammadiyah 1 Bandung Tahun Ajaran 2022-2025`)
-                } else {
-                    alert('siapa itu? jangan ngaku ngaku deehh')
-                }
-            } else if (kelas === 'mipa') {
-                alert(`owh kamu dari kelas ${kelas}, berarti kamu salah satu dari:\n${nama_siswa_kelas_12MIPA.map(nama => '- ' + nama).join('\n')}\ndoonngg?`)
-                let nama = tanya('Kalau gitu nama kamu siapa niicchh?').trim()
-                const found = nama_siswa_kelas_12MIPA.find(n => n.toLowerCase() === nama.toLowerCase());
-                if (found){
-                    alert(`Haaiii ${nama}, apa kabarnyaaa? semoga baik baik ajaaa, selamat bernostalgia di web Angkatan Kelas 12 SMA Muhammadiyah 1 Bandung Tahun Ajaran 2022-2025`)
-                } else {
-                    alert('siapa itu? jangan ngaku ngaku deehh')
-            }
-            } else {
-                alert('Kelas apaan tuuhh? gada di smamsa kelas itu, jangan ngaku ngaku')
-            }
         } else {
-            asal_sekolah = 'Tamu Kehormatan'
-            alert(`Selamat datang di SMAMSA ${asal_sekolah}`)
+            return tanya(pertanyaan);
         }
+    }
+    return jawab.trim()
+}
+
+startBtn.addEventListener('click', () => {
+    alert('Selamat datang di web Kelas 12 SMA Muhammadiyah 1 Bandung');
+
+    try {
+        let asal_sekolah = tanya('Kamu dari SMA manaaa?').toLowerCase();
+
+        if (asal_sekolah === 'sma muhammadiyah 1 bandung') {
+            asal_sekolah = 'Murid Kesayangan';
+            alert(`Selamat datang kembaliii ${asal_sekolah} para guru, wkwkwk`);
+
+            let kelas;
+            while (true) {
+                try {
+                    kelas = tanya('Kamu dari kelas apa niiihh??? (IPS atau MIPA)').toLowerCase();
+                    if (kelas === 'ips' || kelas === 'mipa') break;
+                    alert('Kelas apaan tuuhh? Gak ada di SMAMSA kelas itu, coba lagi yaa...');
+                } catch (err) {
+                    console.log(err.message);
+                    return;
+                }
+            }
+
+            const daftarNama = (kelas === 'ips') ? nama_siswa_kelas_12IPS : nama_siswa_kelas_12MIPA;
+            alert(`Owh kamu dari kelas ${kelas}, berarti kamu salah satu dari:\n${daftarNama.map(n => '- ' + n).join('\n')}`);
+
+            let nama;
+            while (true) {
+                try {
+                    nama = tanya('Kalau gitu nama kamu siapa niicchh?');
+                    const found = daftarNama.find(n => n.toLowerCase() === nama.toLowerCase());
+                    if (found) {
+                        alert(`Haaiii ${nama}, apa kabarnyaaa? Semoga baik-baik ajaaa, selamat bernostalgia di web Angkatan Kelas 12 SMA Muhammadiyah 1 Bandung Tahun Ajaran 2022-2025`);
+                        break;
+                    } else {
+                        alert('Siapa itu? Jangan ngaku-ngaku deehh! Coba isi lagi yang bener yaa...');
+                    }
+                } catch (err) {
+                    console.log(err.message);
+                    return;
+                }
+            }
+
+        } else {
+            asal_sekolah = 'Tamu Kehormatan';
+            alert(`Selamat datang di SMAMSA ${asal_sekolah}`);
+        }
+
     } catch (error) {
-        console.log(error.message)
+        console.log(error.message);
     }
 });
 
