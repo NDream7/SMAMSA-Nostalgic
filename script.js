@@ -30,7 +30,7 @@ const tanggalLahirMap = {
     'Raihan Muhammad Fauzi(Ehan)': '08-01-2007',
     'Rangga Dwi Ramadhani Widilaksono(Dwi)': '27-09-2006',
     'Siti Salwa Nurjannah': '26-01-2007',
-    'Sofi Ismayanti': '03-15-2007',
+    'Sofi Ismayanti': '15-03-2007',
     'Susan Amelia Syakira(Meli)': '12-01-2007',
     'Syahrani T. Sabran(Rani)': '16-07-2007'
 }
@@ -40,6 +40,7 @@ const musicBtn = document.getElementById('musicBtn');
 const audio = document.getElementById('backsound');
 
 let musikNyala = false;
+let musikManual = false;
 
 musicBtn.addEventListener('click', () => {
     if (musikNyala) {
@@ -49,9 +50,19 @@ musicBtn.addEventListener('click', () => {
         audio.currentTime = 0;
         audio.play().catch(err => console.log('Gagal mainkan audio:', err));
         musicBtn.textContent = 'Musik: OFF';
+        musikManual = true;
     }
     musikNyala = !musikNyala;
 });
+
+function musikOtomatis() {
+    if (!musikNyala && !musikManual) {
+        audio.currentTime = 0;
+        audio.play().catch(err => console.log('Gagal auto-play:', err));
+        musikNyala = true;
+        musicBtn.textContent = 'Musik: OFF';
+    }
+}
 
 function tanya(pertanyaan) {
     const jawab = prompt(pertanyaan)
@@ -172,7 +183,7 @@ function kirimData(nama, tanggal, kelas, asal_sekolah) {
                             alert(`Eeehh ${found}, apa kabaarr nicchh ser? masih nolep aja nih lep? WKWKWKW, gimans sama si seangkatan? AHAHAHA`);
                         } else if (found.includes('Ujang Sandi')){
                             alert(`Anjay halooo ${found}, apa kabar pak ketu hw? wkwkwk, gimana gimana? lancar lancar?`);
-                        } else if (found.includes('Aisyah Septiani(Iseh)',)){
+                        } else if (found.includes('Aisyah Septiani(Iseh)')){
                             alert(`Eh ${found}, apa kabar iseh? wkwkwk, gimana? aman? lancar lancar?`);
                         } else if (found.includes('Aldi Wijaya(Yudi)')){
                             alert(`Anjaaayyy ${found}, apa kabaarr ceess? kumaha di jepang? damang? WKWKWK, lancar lancar?`);
@@ -217,12 +228,14 @@ function kirimData(nama, tanggal, kelas, asal_sekolah) {
                 }
             }
             alert(`Semoga kabarnya baik-baik ajaaa yaaa, selamat bernostalgia di web Angkatan Kelas 12 SMA Muhammadiyah 1 Bandung Tahun Ajaran 2022-2025`);
+            musikOtomatis();
         } else {
             asal_sekolah = tanya('Kamu dari sekolah mana niiihhh? kali aja kita tetanggan, wkwkwk').trim();
             alert('Selamat datang Tamu Kehormatan SMAMSA, selamat datang di SMAMSA Nostalgic')
             const namaTamu = tanya('Kalau boleh tau, siapa namanya niicchh?');
-            alert(`Haaaiii ${namaTamu}, sekali lagi selamat datang di SMAMSA Nostalgic yaaa, semoga betaaahh, selamat menikmati SMAMSA Nostalgic yaaa ${namaTamu}`);
+            alert(`Haaaiii ${namaTamu}, sekali lagi selamat datang di SMAMSA Nostalgic, semoga betaaahh yaaa ${namaTamu}, selamat menikmati SMAMSA Nostalgic ${namaTamu}`);
             kirimData(namaTamu, "-", "Tamu Kehormatan", asal_sekolah);
+            musikOtomatis();
         }
 
     } catch (error) {
