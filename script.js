@@ -229,6 +229,9 @@ function kirimData(nama, tanggal, kelas, asal_sekolah) {
             }
             alert(`Semoga kabarnya baik-baik ajaaa yaaa, selamat bernostalgia di web Angkatan Kelas 12 SMA Muhammadiyah 1 Bandung Tahun Ajaran 2022-2025`);
             musikOtomatis();
+            document.body.classList.remove('no-scroll');
+            document.getElementById('scrollHint').classList.add('visible');
+
         } else {
             asal_sekolah = tanya('Kamu dari sekolah mana niiihhh? kali aja kita tetanggan, wkwkwk').trim();
             alert('Selamat datang Tamu Kehormatan SMAMSA, selamat datang di SMAMSA Nostalgic')
@@ -236,6 +239,9 @@ function kirimData(nama, tanggal, kelas, asal_sekolah) {
             alert(`Haaaiii ${namaTamu}, sekali lagi selamat datang di SMAMSA Nostalgic, semoga betaaahh yaaa ${namaTamu}, selamat menikmati SMAMSA Nostalgic ${namaTamu}`);
             kirimData(namaTamu, "-", "Tamu Kehormatan", asal_sekolah);
             musikOtomatis();
+            document.body.classList.remove('no-scroll');
+            document.getElementById('scrollHint').classList.add('visible');
+
         }
 
     } catch (error) {
@@ -243,5 +249,31 @@ function kirimData(nama, tanggal, kelas, asal_sekolah) {
     }
 });
 
+window.addEventListener('scroll', () => {
+    const hint = document.getElementById('scrollHint');
+    if (hint && hint.classList.contains('visible')) {
+        hint.classList.remove('visible');
+    }
+});
 
+const tontonBtn = document.getElementById('tontonVideoBtn');
+const selesaiBtn = document.getElementById('selesaiMenontonBtn');
+const videoWrapper = document.getElementById('videoWrapper');
 
+tontonBtn.addEventListener('click', () => {
+    if (musikNyala) {
+        audio.pause();
+        musikNyala = false;
+        musicBtn.textContent = 'Musik: ON';
+    }
+
+    videoWrapper.style.display = 'block';
+    videoWrapper.scrollIntoView({ behavior: 'smooth' });
+});
+
+selesaiBtn.addEventListener('click', () => {
+    audio.currentTime = 0;
+    audio.play().catch(err => console.log('Gagal mainkan musik ulang:', err));
+    musikNyala = true;
+    musicBtn.textContent = 'Musik: OFF';
+})
