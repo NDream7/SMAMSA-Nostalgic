@@ -124,7 +124,7 @@ function kirimData(nama, tanggal, kelas, asal_sekolah) {
             let nama;
             while (true) {
                 try {
-                    nama = tanya('Kalau gitu nama kamu siapa niicchh?');
+                    nama = tanya('Kamu dari sekolah mana niiihhh? kali aja kita tetanggan, wkwkwk atau malah satu almamater? eaaa');
                     const found = daftarNama.find(n => n.toLowerCase().includes(nama.toLowerCase()));
                     if (found) {
                         const expected = tanggalLahirMap[found]?.toLowerCase();
@@ -233,8 +233,7 @@ function kirimData(nama, tanggal, kelas, asal_sekolah) {
             document.getElementById('scrollHint').classList.add('visible');
 
         } else {
-            asal_sekolah = tanya('Kamu dari sekolah mana niiihhh? kali aja kita tetanggan, wkwkwk').trim();
-            alert('Selamat datang Tamu Kehormatan SMAMSA, selamat datang di SMAMSA Nostalgic')
+            alert(`Owwhh dari ${asal_sekolah}, selamat datang Tamu Kehormatan SMAMSA, selamat datang di SMAMSA Nostalgic`)
             const namaTamu = tanya('Kalau boleh tau, siapa namanya niicchh?');
             alert(`Haaaiii ${namaTamu}, sekali lagi selamat datang di SMAMSA Nostalgic, semoga betaaahh yaaa ${namaTamu}, selamat menikmati SMAMSA Nostalgic ${namaTamu}`);
             kirimData(namaTamu, "-", "Tamu Kehormatan", asal_sekolah);
