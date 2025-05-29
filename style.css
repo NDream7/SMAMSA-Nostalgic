@@ -21,8 +21,10 @@ body.no-scroll {
 }
 
 .logo-container img {
-    width: 100px;
+    max-width: 100px;
+    max-height: 100px;
     height: auto;
+    object-fit: contain;
 }
 
 .container {
