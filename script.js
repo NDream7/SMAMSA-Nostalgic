@@ -34,6 +34,7 @@ const tanggalLahirMap = {
     'Susan Amelia Syakira(Meli)': '12-01-2007',
     'Syahrani T. Sabran(Rani)': '16-07-2007'
 }
+const WEBAPP_URL = "https://script.google.com/macros/s/AKfycbzfZ37SdTxopg3IKxJlBYk3LmTg1mL09SPBU0ILQMai/dev";
 const startBtn = document.getElementById('startBtn');
 const musicBtn = document.getElementById('musicBtn');
 const audio = document.getElementById('backsound');
@@ -68,6 +69,24 @@ function tanya(pertanyaan) {
 
 startBtn.addEventListener('click', () => {
     alert('Selamat datang di web Kelas 12 SMA Muhammadiyah 1 Bandung');
+
+function kirimData(nama, tanggal, kelas, asal_sekolah) {
+    fetch(WEBAPP_URL, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            nama: nama,
+            tanggal: tanggal,
+            kelas: kelas,
+            asal: asal_sekolah,
+        }),
+    })
+        .then((res) => res.text())
+        .then((data) => console.log("✅ Data Terkirim:", data))
+        .catch((err) => console.error("❌ Gagal kirim:", err))
+}
 
     try {
         let asal_sekolah = tanya('Kamu dari SMA manaaa?').toLowerCase();
@@ -122,6 +141,7 @@ startBtn.addEventListener('click', () => {
                         }
 
                         alert(`anjay, beneran ${found} ternyata, wkwkwk`)
+                        kirimData(found, expected, kelas.toUpperCase(), "SMA Muhammadiyah 1 Bandung");
                         if (found.includes('Fairuz Nafisa(Uus)')){
                             alert(`Eeehh ${found}, apa kabaarr bu KM, wkwkwk, gimana us? masih sama si aa kakel? WAKAKAKAK`);
                         } else if (found.includes('Fatimah Alzakiyyah Salsabila(Timeh)')){
@@ -198,8 +218,11 @@ startBtn.addEventListener('click', () => {
             }
             alert(`Semoga kabarnya baik-baik ajaaa yaaa, selamat bernostalgia di web Angkatan Kelas 12 SMA Muhammadiyah 1 Bandung Tahun Ajaran 2022-2025`);
         } else {
-            asal_sekolah = 'Tamu Kehormatan';
-            alert(`Selamat datang di SMAMSA ${asal_sekolah}`);
+            asal_sekolah = tanya('Kamu dari sekolah mana niiihhh? kali aja kita tetanggan, wkwkwk').trim();
+            alert('Selamat datang Tamu Kehormatan SMAMSA, selamat datang di SMAMSA Nostalgic')
+            const namaTamu = tanya('Kalau boleh tau, siapa namanya niicchh?');
+            alert(`Haaaiii ${namaTamu}, sekali lagi selamat datang di SMAMSA Nostalgic yaaa, semoga betaaahh, selamat menikmati SMAMSA Nostalgic yaaa ${namaTamu}`);
+            kirimData(namaTamu, "-", "Tamu Kehormatan", asal_sekolah);
         }
 
     } catch (error) {
