@@ -100,7 +100,7 @@ function kirimData(nama, tanggal, kelas, asal_sekolah) {
 }
 
     try {
-        let asal_sekolah = tanya('Kamu dari SMA manaaa?').toLowerCase();
+        let asal_sekolah = tanya('Kamu dari sekolah mana niiihhh? kali aja kita tetanggan, wkwkwk atau malah satu almamater? eaaa').toLowerCase();
 
         if (asal_sekolah === 'sma muhammadiyah 1 bandung') {
             asal_sekolah = 'Murid Kesayangan';
@@ -124,7 +124,7 @@ function kirimData(nama, tanggal, kelas, asal_sekolah) {
             let nama;
             while (true) {
                 try {
-                    nama = tanya('Kamu dari sekolah mana niiihhh? kali aja kita tetanggan, wkwkwk atau malah satu almamater? eaaa');
+                    nama = tanya('Kalau gitu nama kamu siapa niicchh?');
                     const found = daftarNama.find(n => n.toLowerCase().includes(nama.toLowerCase()));
                     if (found) {
                         const expected = tanggalLahirMap[found]?.toLowerCase();
