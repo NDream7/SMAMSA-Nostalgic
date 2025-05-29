@@ -34,7 +34,7 @@ const tanggalLahirMap = {
     'Susan Amelia Syakira(Meli)': '12-01-2007',
     'Syahrani T. Sabran(Rani)': '16-07-2007'
 }
-const WEBAPP_URL = "https://script.google.com/macros/s/AKfycbz0eWTb3iMZqX2wqZ7ljMeKiNmhUGcSHuyaLIpODizjck8GQhEekp4XiIzpYdnUBJSNwQ/exec";
+const WEBAPP_URL = "https://script.google.com/macros/s/AKfycbxrz5mPSMaMvN9H7p_wdEele-H5x8cvjQmh1nJpT5w1aJYqzAQCS29kIgW5xQr7dsCx6Q/exec";
 const startBtn = document.getElementById('startBtn');
 const musicBtn = document.getElementById('musicBtn');
 const audio = document.getElementById('backsound');
@@ -82,21 +82,19 @@ startBtn.addEventListener('click', () => {
     alert('Selamat datang di web Kelas 12 SMA Muhammadiyah 1 Bandung');
 
 function kirimData(nama, tanggal, kelas, asal_sekolah) {
+    const formData = new URLSearchParams();
+    formData.append("nama", nama);
+    formData.append("tanggal", tanggal);
+    formData.append("kelas", kelas);
+    formData.append("asal", asal_sekolah);
+
     fetch(WEBAPP_URL, {
         method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-            nama: nama,
-            tanggal: tanggal,
-            kelas: kelas,
-            asal: asal_sekolah,
-        }),
+        body: formData
     })
-        .then((res) => res.text())
-        .then((data) => console.log("✅ Data Terkirim:", data))
-        .catch((err) => console.error("❌ Gagal kirim:", err))
+    .then((res) => res.text())
+    .then((data) => console.log("✅ Data Terkirim:", data))
+    .catch((err) => console.error("❌ Gagal kirim:", err));
 }
 
     try {
