@@ -1,6 +1,39 @@
 const nama_siswa_kelas_12IPS = ['Fairuz Nafisa(Uus)', 'Fatimah Alzakiyyah Salsabila(Timeh)', 'Hari Hamdani', 'Karmila Vega(Mila)', "Ma'rifatul Insan", 'Milano Putris(Minos)', 'Muhamad Zeihan Alghifari(Jehan)', 'Muhammad Rauf Fauzan', 'Nailah Halimatus Sadiyah Ramdan(Nai)', 'Putri Zahrah(Mput)', 'Rangga Kurnia(Rakur)', 'Safwana Rasyida Putri(Sapa)', 'Shidqi Muhammad Fauzan', 'Syaira Zahra Fadillah(Sera)', 'Ujang Sandi']
 const nama_siswa_kelas_12MIPA = ['Aisyah Septiani(Iseh)', 'Aldi Wijaya(Yudi)', 'Aliffa Euis Harummi(Ipeh)', 'Arsya Naovarrahma(Aca)', 'Fatma Fauziyyah(Ama)', 'Maurel Khulaida Afifatul Aini', 'Muhammad Arya Bima Prasetianto(Abim)', 'Mutia Mauludiah(Muti)', 'Nabilla Aufaa(Bila)', 'Neneng Mega Khoerunisa', 'Nikita Rizki Mutiara(Niki)', 'Raihan Muhammad Fauzi(Ehan)', 'Rangga Dwi Ramadhani Widilaksono(Dwi)', 'Siti Salwa Nurjannah', 'Sofi Ismayanti', 'Susan Amelia Syakira(Meli)', 'Syahrani T. Sabran(Rani)']
-
+const tanggalLahirMap = {
+    'Fairuz Nafisa(Uus)': '16-05-2007',
+    'Fatimah Alzakiyyah Salsabila(Timeh)': '02-05-2007',
+    'Hari Hamdani': '03-01-2004',
+    'Karmila Vega(Mila)': '28-12-2005',
+    "Ma'rifatul Insan": '24-09-2006',
+    'Milano Putris(Minos)': '14-03-2007',
+    'Muhamad Zeihan Alghifari(Jehan)': '15-01-2007',
+    'Muhammad Rauf Fauzan': '05-07-2006',
+    'Nailah Halimatus Sadiyah Ramdan(Nai)': '19-04-2007',
+    'Putri Zahrah(Mput)': '30-11-2006',
+    'Rangga Kurnia(Rakur)': '19-12-2006',
+    'Safwana Rasyida Putri(Sapa)': '01-08-2007',
+    'Shidqi Muhammad Fauzan': '07-06-2006',
+    'Syaira Zahra Fadillah(Sera)': '08-07-2006',
+    'Ujang Sandi': '16-05-2005',
+    'Aisyah Septiani(Iseh)': '19-09-2006',
+    'Aldi Wijaya(Yudi)': '08-11-2006',
+    'Aliffa Euis Harummi(Ipeh)': '20-11-2006',
+    'Arsya Naovarrahma(Aca)': '31-01-2007',
+    'Fatma Fauziyyah(Ama)': '03-06-2006',
+    'Maurel Khulaida Afifatul Aini': '12-12-2006',
+    'Muhammad Arya Bima Prasetianto(Abim)': '01-01-2007',
+    'Mutia Mauludiah(Muti)': '23-04-2006',
+    'Nabilla Aufaa(Bila)': '21-09-2007',
+    'Neneng Mega Khoerunisa': '03-02-2008',
+    'Nikita Rizki Mutiara(Niki)': '21-07-2007',
+    'Raihan Muhammad Fauzi(Ehan)': '08-01-2007',
+    'Rangga Dwi Ramadhani Widilaksono(Dwi)': '27-09-2006',
+    'Siti Salwa Nurjannah': '26-01-2007',
+    'Sofi Ismayanti': '03-15-2007',
+    'Susan Amelia Syakira(Meli)': '12-01-2007',
+    'Syahrani T. Sabran(Rani)': '16-07-2007'
+}
 const startBtn = document.getElementById('startBtn');
 const musicBtn = document.getElementById('musicBtn');
 const audio = document.getElementById('backsound');
@@ -64,6 +97,31 @@ startBtn.addEventListener('click', () => {
                     nama = tanya('Kalau gitu nama kamu siapa niicchh?');
                     const found = daftarNama.find(n => n.toLowerCase().includes(nama.toLowerCase()));
                     if (found) {
+                        const expected = tanggalLahirMap[found]?.toLowerCase();
+                        if(!expected){
+                            alert(`Laahh kocak, tanggal lahir kamu ${found} belum ada, cepet kasih tau si abim`)
+                            throw new Error('Data tanggal lahirnya kosong oey');
+                        }
+
+                        const inputTgl = tanya(`Emang kamu beneran si ${found}? masa sih? kalo gitu coba sebutin tanggal lahirnya kapan?\n(contoh: 01-01-2007 atau 01 Januari 2007)`)
+                        .toLowerCase()
+                        .replace(/\//g, '-')
+                        .replace(/\s+/g, '-');
+
+                        const inputCleaned = inputTgl
+                            .replace(/januari/, '01').replace(/februari/, '02')
+                            .replace(/maret/, '03').replace(/april/, '04')
+                            .replace(/mei/, '05').replace(/juni/, '06')
+                            .replace(/juli/, '07').replace(/agustus/, '08')
+                            .replace(/september/, '09').replace(/oktober/, '10')
+                            .replace(/november/, '11').replace(/desember/, '12')
+                            
+                        if (inputCleaned !== expected) {
+                            alert(`Yahahaha salaahh, jan ngaku-ngaku jadi si ${found} deeehhh, sana sana balik masukin nama, yang bener kocaakk`);
+                            continue;
+                        }
+
+                        alert(`anjay, beneran ${found} ternyata, wkwkwk`)
                         if (found.includes('Fairuz Nafisa(Uus)')){
                             alert(`Eeehh ${found}, apa kabaarr bu KM, wkwkwk, gimana us? masih sama si aa kakel? WAKAKAKAK`);
                         } else if (found.includes('Fatimah Alzakiyyah Salsabila(Timeh)')){
