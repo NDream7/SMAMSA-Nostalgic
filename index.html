@@ -2,10 +2,20 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewpoint" content="width=device-width", initial-scale="1.0">
     <title>Angkatan kelas 12 SMA Muhammadiyah 1 Bandung</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div class="logo-container">
+        <img src="logo muhammadiyah.png" alt="Logo Muhammadiyah">
+        <img src="logo smamsa.png" alt="Logo SMAMSA">
+        <img src="logo ipm.png" alt="Logo IPM">
+        <img src="logo hw.png.png" alt="Logo Hizbul Wathan">
+        <img src="logo tapak suci.png" alt="Logo Tapak Suci">
+        <img src="logo lsm.png" alt="Logo LSM SMAMSA">
+    </div>
+
     <audio id="backsound" src="mars smamsa.mp3" loop></audio>   
     <div class="container">    
         <h1>HAAAII Selamat Datang di Web Angkatan Kelas 12 <br>
@@ -14,7 +24,31 @@
         </h1>
         <button id="startBtn">Mulai Nostalgia</button>    
     </div>
+
     <button id="musicBtn">Musik: ON</button>
+    
+    <div id="scrollHint">
+        <span class="arrow left">⬇️</span>
+        <span class="arrow right">⬇️</span>
+    </div>
+
+    <div class="konten-kenangan" id="kontenKenangan">
+        <h2>Kenangan Angkatan 2022-2025</h2>
+        <button id="tontonVideoBtn">▶️ Tonton Video</button>
+        <div id="videoWrapper" style="display: none; margin-top: 20px;">
+            <iframe
+                id="videoKenangan"
+                src="https://drive.google.com/file/d/1M6IuIGY18NgNOEPUArhv6FTioy90AToS/preview"
+                width="90%"
+                height="480"
+                allow="autoplay"
+                allowfullscreen
+                frameborder="0">
+            </iframe>
+            <button id="selesaiMenontonBtn" style="margin-top: 16px;">✅ Selesai Menonton</button>
+        </div>
+    </div>
+    
     <script src="script.js"></script>
 </body>
 </html>
