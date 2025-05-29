@@ -34,7 +34,7 @@ const tanggalLahirMap = {
     'Susan Amelia Syakira(Meli)': '12-01-2007',
     'Syahrani T. Sabran(Rani)': '16-07-2007'
 }
-const WEBAPP_URL = "https://script.google.com/macros/s/AKfycbzfZ37SdTxopg3IKxJlBYk3LmTg1mL09SPBU0ILQMai/dev";
+const WEBAPP_URL = "https://script.google.com/macros/s/AKfycbxCAjwStQkyVLh_E3xDOnKdqwk5ufpLGouw17_J53woLb7gopa1vhx28rHxHfEL-3A3LQ/exec";
 const startBtn = document.getElementById('startBtn');
 const musicBtn = document.getElementById('musicBtn');
 const audio = document.getElementById('backsound');
