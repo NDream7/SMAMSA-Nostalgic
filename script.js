@@ -78,13 +78,13 @@ function tanya(pertanyaan) {
     return jawab.trim()
 }
 
-function kirimData(nama, tanggal, kelas, asal_sekolah, sapaan = '') {
+function kirimData(nama, tanggal, kelas, asal_sekolah, respon = '-') {
     const formData = new URLSearchParams();
     formData.append("nama", nama);
     formData.append("tanggal", tanggal);
     formData.append("kelas", kelas);
     formData.append("asal", asal_sekolah);
-    formData.append("sapaan", sapaan);
+    formData.append("sapaan", respon);
 
     fetch(WEBAPP_URL, {
         method: "POST",
