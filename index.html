@@ -2,9 +2,11 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewpoint" content="width=device-width", initial-scale="1.0">
-    <title>Angkatan kelas 12 SMA Muhammadiyah 1 Bandung</title>
+    <meta name="viewport" content="width=device-width", initial-scale="1.0">
+    <meta name="description" content="Web Nostalgia Alumni SMAMSA">
+    <title>SMAMSA Nostalgic</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="favicom.png" type="image/png">
 </head>
 <body class="no-scroll">
     
@@ -18,13 +20,14 @@
     </div>
 
     <audio id="backsound" src="mars smamsa.mp3" loop></audio>   
-    <div class="container">    
+    
+    <main class="container">    
         <h1>HAAAII Selamat Datang di Web Angkatan Kelas 12 <br>
                 SMA Muhammadiyah 1 Bandung <br>
                 Tahun ajaran 2022-2025
         </h1>
         <button id="startBtn">Mulai Nostalgia</button>    
-    </div>
+    </main>
 
     <button id="musicBtn">Musik: ON</button>
     
@@ -33,14 +36,14 @@
         <span class="arrow right">⬇️</span>
     </div>
 
-    <div class="konten-kenangan" id="kontenKenangan">
+    <section class="konten-kenangan" id="kontenKenangan">
         <h2>Kenangan Angkatan 2022-2025</h2>
         <button id="tontonVideoBtn">▶️ Tonton Video</button>
         <div id="videoWrapper" style="display: none; margin-top: 20px;">
             <div class="video-container">
                 <iframe
                     id="videoKenangan"
-                    src="https://drive.google.com/file/d/1M6IuIGY18NgNOEPUArhv6FTioy90AToS/preview"
+                    src="https://www.youtube.com/embed/MFKWDMAJc1M?rel=0"
                     allow="autoplay"
                     allowfullscreen
                     frameborder="0">
@@ -48,7 +51,7 @@
             </div>    
             <button id="selesaiMenontonBtn" style="margin-top: 16px;">✅ Selesai Menonton</button>
         </div>
-    </div>
+    </section>
 
     <script src="script.js"></script>
 </body>
