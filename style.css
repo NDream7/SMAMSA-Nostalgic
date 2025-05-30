@@ -181,7 +181,7 @@ button:hover {
 
     .logo-container img {
         width: 40px;
-        height: auto;
+        max-height: 40px;
     }
 
     #videoWrapper iframe {
