@@ -131,7 +131,7 @@ startBtn.addEventListener('click', () => {
                 try {
                     nama = tanya('Kalau gitu nama kamu siapa niicchh?');
                     const found = daftarNama.find(n => n.toLowerCase().includes(nama.toLowerCase()));
-                    if (!found) {
+                    if (found) {
                     const expected = tanggalLahirMap[found]?.toLowerCase();
                     if(!expected){
                         alert(`Laahh kocak, tanggal lahir kamu ${found} belum ada, cepet kasih tau si abim`)
