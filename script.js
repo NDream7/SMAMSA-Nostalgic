@@ -78,15 +78,13 @@ function tanya(pertanyaan) {
     return jawab.trim()
 }
 
-startBtn.addEventListener('click', () => {
-    alert('Selamat datang di web Kelas 12 SMA Muhammadiyah 1 Bandung');
-
-function kirimData(nama, tanggal, kelas, asal_sekolah) {
+function kirimData(nama, tanggal, kelas, asal_sekolah, sapaan = '') {
     const formData = new URLSearchParams();
     formData.append("nama", nama);
     formData.append("tanggal", tanggal);
     formData.append("kelas", kelas);
     formData.append("asal", asal_sekolah);
+    formData.append("sapaan", sapaan);
 
     fetch(WEBAPP_URL, {
         method: "POST",
@@ -97,10 +95,19 @@ function kirimData(nama, tanggal, kelas, asal_sekolah) {
     .catch((err) => console.error("❌ Gagal kirim:", err));
 }
 
-    try {
-        let asal_sekolah = tanya('Kamu dari sekolah mana niiihhh? kali aja kita tetanggan, wkwkwk atau malah satu almamater? eaaa').toLowerCase();
+startBtn.addEventListener('click', () => {
+    alert('Selamat datang di web Kelas 12 SMA Muhammadiyah 1 Bandung');
 
-        if (asal_sekolah === 'sma muhammadiyah 1 bandung') {
+    try {
+        let asal_sekolah_input = tanya('Kamu dari sekolah mana niiihhh? kali aja kita tetanggan, wkwkwk atau malah satu almamater? eaaa')
+            .toLowerCase()
+            .trim()
+            .replace(/\s+/g, '');
+
+        let asal_sekolah = asal_sekolah_input; 
+        const dariSmamsa = asal_sekolah.includes('smamsa') || asal_sekolah.includes('sma muhammadiyah 1')   
+
+        if (dariSmamsa || asal_sekolah === 'sma muhammadiyah 1 bandung') {
             asal_sekolah = 'Murid Kesayangan';
             alert(`Selamat datang kembaliii ${asal_sekolah} para guru, wkwkwk`);
 
@@ -124,14 +131,14 @@ function kirimData(nama, tanggal, kelas, asal_sekolah) {
                 try {
                     nama = tanya('Kalau gitu nama kamu siapa niicchh?');
                     const found = daftarNama.find(n => n.toLowerCase().includes(nama.toLowerCase()));
-                    if (found) {
-                        const expected = tanggalLahirMap[found]?.toLowerCase();
-                        if(!expected){
-                            alert(`Laahh kocak, tanggal lahir kamu ${found} belum ada, cepet kasih tau si abim`)
-                            throw new Error('Data tanggal lahirnya kosong oey');
-                        }
+                    if (!found) {
+                    const expected = tanggalLahirMap[found]?.toLowerCase();
+                    if(!expected){
+                        alert(`Laahh kocak, tanggal lahir kamu ${found} belum ada, cepet kasih tau si abim`)
+                        throw new Error('Data tanggal lahirnya kosong oey');
+                    }
 
-                        const inputTgl = tanya(`Emang kamu beneran si ${found}? masa sih? kalo gitu coba sebutin tanggal lahirnya kapan?\n(contoh: 01-01-2007 atau 01 Januari 2007)`)
+                    const inputTgl = tanya(`Emang kamu beneran si ${found}? masa sih? kalo gitu coba sebutin tanggal lahirnya kapan?\n(contoh: 01-01-2007 atau 01 Januari 2007)`)
                         .toLowerCase()
                         .replace(/\//g, '-')
                         .replace(/\s+/g, '-');
@@ -152,73 +159,106 @@ function kirimData(nama, tanggal, kelas, asal_sekolah) {
                         alert(`anjay, beneran ${found} ternyata, wkwkwk`)
                         kirimData(found, expected, kelas.toUpperCase(), "SMA Muhammadiyah 1 Bandung");
                         if (found.includes('Fairuz Nafisa(Uus)')){
-                            alert(`Eeehh ${found}, apa kabaarr bu KM, wkwkwk, gimana us? masih sama si aa kakel? WAKAKAKAK`);
+                            const sapaan = prompt(`Eeehh ${found}, apa kabaarr bu KM, wkwkwk, gimana us? masih sama si aa kakel? WAKAKAKAK`);
+                            kirimData(found, expected, kelas.toUpperCase(), "SMA Muhammadiyah 1 Bandung", sapaan);
                         } else if (found.includes('Fatimah Alzakiyyah Salsabila(Timeh)')){
-                            alert(`EH ${found}? Apa kabs? si kull, kece, cicingeun wkwkwk, masih intropert kah? xixi`);
+                            const sapaan = prompt(`EH ${found}? Apa kabs? si kull, kece, cicingeun wkwkwk, masih intropert kah? xixi`);
+                            kirimData(found, expected, kelas.toUpperCase(), "SMA Muhammadiyah 1 Bandung", sapaan);
                         } else if (found.includes('Hari Hamdani')){
-                            alert(`Halo bang ${found}, apa kabar? aman aman? lancar?`);
+                            const sapaan = prompt(`Halo bang ${found}, apa kabar? aman aman? lancar?`);
+                            kirimData(found, expected, kelas.toUpperCase(), "SMA Muhammadiyah 1 Bandung", sapaan);
                         } else if (found.includes('Karmila Vega(Mila)')){
-                            alert(`EH ${found}? Apa kabar miill? gimans gimans? aman? lancar?`);
+                            const sapaan = prompt(`EH ${found}? Apa kabar miill? gimans gimans? aman? lancar?`);
+                            kirimData(found, expected, kelas.toUpperCase(), "SMA Muhammadiyah 1 Bandung", sapaan);
                         } else if (found.includes("Ma'rifatul Insan")){
-                            alert(`Eeeyy ${found}, apa kabs bang? lancar lancar bang?`);
+                            const sapaan = prompt(`Eeeyy ${found}, apa kabs bang? lancar lancar bang?`);
+                            kirimData(found, expected, kelas.toUpperCase(), "SMA Muhammadiyah 1 Bandung", sapaan);
                         } else if (found.includes('Milano Putris(Minos)')){
-                            alert(`Eeehh ${found}, apa kabs nooosss? gimana gimana nich, masih nempel sama cowok tele? WKWKWKWK`);
+                            const sapaan = prompt(`Eeehh ${found}, apa kabs nooosss? gimana gimana nich, masih nempel sama cowok tele? WKWKWKWK`);
+                            kirimData(found, expected, kelas.toUpperCase(), "SMA Muhammadiyah 1 Bandung", sapaan);
                         } else if (found.includes('Muhamad Zeihan Alghifari(Jehan)')){
-                            alert(`Eh bang ${found}, apa kabar banh? masih menjomok-jomok kaahh? WKWKWKWK`);
+                            const sapaan = prompt(`Eh bang ${found}, apa kabar banh? masih menjomok-jomok kaahh? WKWKWKWK`);
+                            kirimData(found, expected, kelas.toUpperCase(), "SMA Muhammadiyah 1 Bandung", sapaan);
                         } else if (found.includes('Muhammad Rauf Fauzan')){
-                            alert(`Halo bang ${found}, apa kabar? aman lah yaa? lancar?`);
+                            const sapaan = prompt(`Halo bang ${found}, apa kabar? aman lah yaa? lancar?`);
+                            kirimData(found, expected, kelas.toUpperCase(), "SMA Muhammadiyah 1 Bandung", sapaan);
                         } else if (found.includes('Nailah Halimatus Sadiyah Ramdan(Nai)')){
-                            alert(`Eeehh ${found}, apa kabaarr mba e? masih ha he ho kah? WKWKWKWK`);
+                            const sapaan = prompt(`Eeehh ${found}, apa kabaarr mba e? masih ha he ho kah? WKWKWKWK`);
+                            kirimData(found, expected, kelas.toUpperCase(), "SMA Muhammadiyah 1 Bandung", sapaan);
                         } else if (found.includes('Putri Zahrah(Mput)')){
-                            alert(`Eeehh${found}, apa kabaarr mpuutt? gimana nich masih sama si aa jangkung kah? WKWKWK`);
+                            const sapaan = prompt(`Eeehh${found}, apa kabaarr mpuutt? gimana nich masih sama si aa jangkung kah? WKWKWK`);
+                            kirimData(found, expected, kelas.toUpperCase(), "SMA Muhammadiyah 1 Bandung", sapaan);
                         } else if (found.includes('Rangga Kurnia(Rakur)')){
-                            alert(`Anjaaayyy ${found}, apa kabaarr pak booss? wkwkwk, gimana nih? lancar lancar bisnisnya?`);
+                            const sapaan = prompt(`Anjaaayyy ${found}, apa kabaarr pak booss? wkwkwk, gimana nih? lancar lancar bisnisnya?`);
+                            kirimData(found, expected, kelas.toUpperCase(), "SMA Muhammadiyah 1 Bandung", sapaan);
                         } else if (found.includes('Safwana Rasyida Putri(Sapa)')){
-                            alert(`Eeehh ${found}, apa kabar sap? mba e masih nyantel sama aa brondong kaahh? WKWKWKWK`);
+                            const sapaan = prompt(`Eeehh ${found}, apa kabar sap? mba e masih nyantel sama aa brondong kaahh? WKWKWKWK`);
+                            kirimData(found, expected, kelas.toUpperCase(), "SMA Muhammadiyah 1 Bandung", sapaan);
                         } else if (found.includes('Shidqi Muhammad Fauzan')){
-                            alert(`Halo bang ${found}, apa kabar pria dingin? wkwkwk, gimana? aman aman? lancar?`);
+                            const sapaan = prompt(`Halo bang ${found}, apa kabar pria dingin? wkwkwk, gimana? aman aman? lancar?`);
+                            kirimData(found, expected, kelas.toUpperCase(), "SMA Muhammadiyah 1 Bandung", sapaan);
                         } else if (found.includes('Syaira Zahra Fadillah(Sera)')){
-                            alert(`Eeehh ${found}, apa kabaarr nicchh ser? masih nolep aja nih lep? WKWKWKW, gimans sama si seangkatan? AHAHAHA`);
+                            const sapaan = prompt(`Eeehh ${found}, apa kabaarr nicchh ser? masih nolep aja nih lep? WKWKWKW, gimans sama si seangkatan? AHAHAHA`);
+                            kirimData(found, expected, kelas.toUpperCase(), "SMA Muhammadiyah 1 Bandung", sapaan);
                         } else if (found.includes('Ujang Sandi')){
-                            alert(`Anjay halooo ${found}, apa kabar pak ketu hw? wkwkwk, gimana gimana? lancar lancar?`);
+                            const sapaan = prompt(`Anjay halooo ${found}, apa kabar pak ketu hw? wkwkwk, gimana gimana? lancar lancar?`);
+                            kirimData(found, expected, kelas.toUpperCase(), "SMA Muhammadiyah 1 Bandung", sapaan);
                         } else if (found.includes('Aisyah Septiani(Iseh)')){
-                            alert(`Eh ${found}, apa kabar iseh? wkwkwk, gimana? aman? lancar lancar?`);
+                            const sapaan = prompt(`Eh ${found}, apa kabar iseh? wkwkwk, gimana? aman? lancar lancar?`);
+                            kirimData(found, expected, kelas.toUpperCase(), "SMA Muhammadiyah 1 Bandung", sapaan);
                         } else if (found.includes('Aldi Wijaya(Yudi)')){
-                            alert(`Anjaaayyy ${found}, apa kabaarr ceess? kumaha di jepang? damang? WKWKWK, lancar lancar?`);
+                            const sapaan = prompt(`Anjaaayyy ${found}, apa kabaarr ceess? kumaha di jepang? damang? WKWKWK, lancar lancar?`);
+                            kirimData(found, expected, kelas.toUpperCase(), "SMA Muhammadiyah 1 Bandung", sapaan);
                         } else if (found.includes('Aliffa Euis Harummi(Ipeh)')){
-                            alert(`Eeehh ${found}, apa kabaarr ipeehh? aku shock sih pas tau soal kamu sama si aa padus, bisa bisanyaaa wkwkwk, tapi gimana? aman? lancar?`);
+                            const sapaan = prompt(`Eeehh ${found}, apa kabaarr ipeehh? aku shock sih pas tau soal kamu sama si aa padus, bisa bisanyaaa wkwkwk, tapi gimana? aman? lancar?`);
+                            kirimData(found, expected, kelas.toUpperCase(), "SMA Muhammadiyah 1 Bandung", sapaan);
                         } else if (found.includes('Arsya Naovarrahma(Aca)')){
-                            alert(`Eeehh ${found}, apa kabar caaa? gimans gimans? lancaarr? karate jan lupa dipake buat menghadapi buaya ca, wkwkwk`);
+                            const sapaan = prompt(`Eeehh ${found}, apa kabar caaa? gimans gimans? lancaarr? karate jan lupa dipake buat menghadapi buaya ca, wkwkwk`);
+                            kirimData(found, expected, kelas.toUpperCase(), "SMA Muhammadiyah 1 Bandung", sapaan);
                         } else if (found.includes('Fatma Fauziyyah(Ama)')){
-                            alert(`Eeehh ${found}, apa kabs ma? gimans sama aa ujang? masih aman dan lancar kaahh? wkwkwk`);
+                            const sapaan = prompt(`Eeehh ${found}, apa kabs ma? gimans sama aa ujang? masih aman dan lancar kaahh? wkwkwk`);
+                            kirimData(found, expected, kelas.toUpperCase(), "SMA Muhammadiyah 1 Bandung", sapaan);
                         } else if (found.includes('Maurel Khulaida Afifatul Aini')){
-                            alert(`Eh ${found}, apa kabar rel? aman aman? lancar?`);
+                            const sapaan = prompt(`Eh ${found}, apa kabar rel? aman aman? lancar?`);
+                            kirimData(found, expected, kelas.toUpperCase(), "SMA Muhammadiyah 1 Bandung", sapaan);
                         } else if (found.includes('Muhammad Arya Bima Prasetianto(Abim)')){
-                            alert(`Eh abang ${found}, kau ngapain kocak? kau editornya bege, KWOCAK BEEUUTT WKWKWKW, tapi apa kabar banh?`);
+                            const sapaan = prompt(`Eh abang ${found}, kau ngapain kocak? kau editornya bege, KWOCAK BEEUUTT WKWKWKW, tapi apa kabar banh?`);
+                            kirimData(found, expected, kelas.toUpperCase(), "SMA Muhammadiyah 1 Bandung", sapaan);
                         } else if (found.includes('Mutia Mauludiah(Muti)')){
-                            alert(`Eh ${found}, apa kabar mut? gimana? aman kah? lancar lancar?`);
+                            const sapaan = prompt(`Eh ${found}, apa kabar mut? gimana? aman kah? lancar lancar?`);
+                            kirimData(found, expected, kelas.toUpperCase(), "SMA Muhammadiyah 1 Bandung", sapaan);
                         } else if (found.includes('Nabilla Aufaa(Bila)')){
-                            alert(`Eeehh ${found}, apa kabs bilbil? wkwkwk, gimana niihh? aman aman? lancaarr?`);
+                            const sapaan = prompt(`Eeehh ${found}, apa kabs bilbil? wkwkwk, gimana niihh? aman aman? lancaarr?`);
+                            kirimData(found, expected, kelas.toUpperCase(), "SMA Muhammadiyah 1 Bandung", sapaan);
                         } else if (found.includes('Neneng Mega Khoerunisa')){
-                            alert(`Eh ${found}, apa kabar neneng megak? wkwkwk, gimana gimana? lancarkaann? aman aman?`);
+                            const sapaan = prompt(`Eh ${found}, apa kabar neneng megak? wkwkwk, gimana gimana? lancarkaann? aman aman?`);
+                            kirimData(found, expected, kelas.toUpperCase(), "SMA Muhammadiyah 1 Bandung", sapaan);
                         } else if (found.includes('Nikita Rizki Mutiara(Niki)')){
-                            alert(`Eeehh ${found}, apa kabaarr niikk? si aa clbk ya sama si itu? wkwkwk, gimana nih? amankan? lancar lancar?`);
+                            const sapaan = prompt(`Eeehh ${found}, apa kabaarr niikk? si aa clbk ya sama si itu? wkwkwk, gimana nih? amankan? lancar lancar?`);
+                            kirimData(found, expected, kelas.toUpperCase(), "SMA Muhammadiyah 1 Bandung", sapaan);
                         } else if (found.includes('Raihan Muhammad Fauzi(Ehan)')){
-                            alert(`Anjaaayyy ${found}, apa kabs bang? kumaha damang kotak? AWOKWOKWOK, canda canda, tapi kumaha gawe? lancar lancar? aman?`);
+                            const sapaan = prompt(`Anjaaayyy ${found}, apa kabs bang? kumaha damang kotak? AWOKWOKWOK, canda canda, tapi kumaha gawe? lancar lancar? aman?`);
+                            kirimData(found, expected, kelas.toUpperCase(), "SMA Muhammadiyah 1 Bandung", sapaan);
                         } else if (found.includes('Rangga Dwi Ramadhani Widilaksono(Dwi)')){
-                            alert(`Anjaaayyy ${found}, apa kaabbss wiii? wkwkwk, kumaha damaanngg? kumaha kelanjutan jeung si S heum? WAKAKAKA, tapi aman aman? lancar?`);
+                            const sapaan = prompt(`Anjaaayyy ${found}, apa kaabbss wiii? wkwkwk, kumaha damaanngg? kumaha kelanjutan jeung si S heum? WAKAKAKA, tapi aman aman? lancar?`);
+                            kirimData(found, expected, kelas.toUpperCase(), "SMA Muhammadiyah 1 Bandung", sapaan);
                         } else if (found.includes('Siti Salwa Nurjannah')){
-                            alert(`Eh ${found}, apa kabar wa? gimana? aman aman? lancar?`);
+                            const sapaan = prompt(`Eh ${found}, apa kabar wa? gimana? aman aman? lancar?`);
+                            kirimData(found, expected, kelas.toUpperCase(), "SMA Muhammadiyah 1 Bandung", sapaan);
                         } else if (found.includes('Sofi Ismayanti')){
-                            alert(`Eeehh ${found}, apa kabaarr soopp? wkwkwk, gimana gimana? amankaahh? lancar lancar sop?`);
+                            const sapaan = prompt(`Eeehh ${found}, apa kabaarr soopp? wkwkwk, gimana gimana? amankaahh? lancar lancar sop?`);
+                            kirimData(found, expected, kelas.toUpperCase(), "SMA Muhammadiyah 1 Bandung", sapaan);
                         } else if (found.includes('Susan Amelia Syakira(Meli)')){
-                            alert(`Eeehh ${found}, apa kabar mel? gimana kabar sama si aa smk? WKWKWK, gimana gimana? aman? lancar?`);
+                            const sapaan = prompt(`Eeehh ${found}, apa kabar mel? gimana kabar sama si aa smk? WKWKWK, gimana gimana? aman? lancar?`);
+                            kirimData(found, expected, kelas.toUpperCase(), "SMA Muhammadiyah 1 Bandung", sapaan);
                         } else if (found.includes('Syahrani T. Sabran(Rani)')){
-                            alert(`Eh ${found}, apa kabar ran? gimana nih? lancar lancar? aman?`);
+                            const sapaan = prompt(`Eh ${found}, apa kabar ran? gimana nih? lancar lancar? aman?`);
+                            kirimData(found, expected, kelas.toUpperCase(), "SMA Muhammadiyah 1 Bandung", sapaan);
                         } 
                         break;
                     } else {
                         alert('Siapa itu? Jangan ngaku-ngaku deehh! isinya yang bener kocaakk');
+                        continue;
                     }
                 } catch (err) {
                     console.log(err.message);
@@ -233,9 +273,11 @@ function kirimData(nama, tanggal, kelas, asal_sekolah) {
         } else {
             alert(`Owwhh dari ${asal_sekolah}, selamat datang Tamu Kehormatan SMAMSA, selamat datang di SMAMSA Nostalgic`)
             const namaTamu = tanya('Kalau boleh tau, siapa namanya niicchh?');
+            const keperluan = tanya('Ada keperluan apa niicchh? mampir ke web SMAMSA Nostalgic, just asking hehe');
             alert(`Haaaiii ${namaTamu}, sekali lagi selamat datang di SMAMSA Nostalgic, semoga betaaahh yaaa ${namaTamu}, selamat menikmati SMAMSA Nostalgic ${namaTamu}`);
-            kirimData(namaTamu, "-", "Tamu Kehormatan", asal_sekolah);
+            kirimData(namaTamu, "00-00-0000", "Tamu Kehormatan", asal_sekolah, keperluan);
             musikOtomatis();
+            
             document.body.classList.remove('no-scroll');
             document.getElementById('scrollHint').classList.add('visible');
 
