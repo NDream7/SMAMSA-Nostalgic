@@ -258,7 +258,6 @@ startBtn.addEventListener('click', () => {
                         break;
                     } else {
                         alert('Siapa itu? Jangan ngaku-ngaku deehh! isinya yang bener kocaakk');
-                        continue;
                     }
                 } catch (err) {
                     console.log(err.message);
