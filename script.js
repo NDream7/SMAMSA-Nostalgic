@@ -157,7 +157,7 @@ startBtn.addEventListener('click', () => {
                         }
 
                         alert(`anjay, beneran ${found} ternyata, wkwkwk`)
-                        kirimData(found, expected, kelas.toUpperCase(), "SMA Muhammadiyah 1 Bandung");
+                        
                         if (found.includes('Fairuz Nafisa(Uus)')){
                             const sapaan = prompt(`Eeehh ${found}, apa kabaarr bu KM, wkwkwk, gimana us? masih sama si aa kakel? WAKAKAKAK`);
                             kirimData(found, expected, kelas.toUpperCase(), "SMA Muhammadiyah 1 Bandung", sapaan);
