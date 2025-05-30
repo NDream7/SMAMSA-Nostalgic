@@ -96,10 +96,10 @@ function kirimData(nama, tanggal, kelas, asal_sekolah, respon = '-') {
 }
 
 startBtn.addEventListener('click', () => {
-    alert('Selamat datang di web Kelas 12 SMA Muhammadiyah 1 Bandung');
+    alert('Selamat datang di web nostalgia SMA Muhammadiyah 1 Bandung');
 
     try {
-        let asal_sekolah_input = tanya('Kamu dari sekolah mana niiihhh? kali aja kita tetanggan, wkwkwk atau malah satu almamater? eaaa')
+        let asal_sekolah_input = tanya('Kamu dari sekolah mana niiihhh? kali aja kita tetanggaan, wkwkwk atau malah satu almamater? eaaa')
             .toLowerCase()
             .trim()
             .replace(/\s+/g, '');
