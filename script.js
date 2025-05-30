@@ -34,7 +34,7 @@ const tanggalLahirMap = {
     'Susan Amelia Syakira(Meli)': '12-01-2007',
     'Syahrani T. Sabran(Rani)': '16-07-2007'
 }
-const WEBAPP_URL = "https://script.google.com/macros/s/AKfycbwkEs7daSVkIuBRyKL_ufJy4l2NZoBDqpRl4C1-6eYts2ki-bPf6NQ3u89meKD2mhjnhg/exec";
+const WEBAPP_URL = "https://script.google.com/macros/s/AKfycbweIIo8lqAnyXXbeCf6-kxoVNU84i9YAwTC5mwkMM9c4joBWtrahcvAdAocd6jHuNfeyw/exec";
 const startBtn = document.getElementById('startBtn');
 const musicBtn = document.getElementById('musicBtn');
 const audio = document.getElementById('backsound');
@@ -78,12 +78,13 @@ function tanya(pertanyaan) {
     return jawab.trim()
 }
 
-function kirimData(nama, tanggal, kelas, asal_sekolah, respon = '-') {
+function kirimData(nama, tanggal,asal_sekolah, angkatan, kelas, respon = '-') {
     const formData = new URLSearchParams();
     formData.append("nama", nama);
     formData.append("tanggal", tanggal);
-    formData.append("kelas", kelas);
     formData.append("asal", asal_sekolah);
+    formData.append("angkatan", angkatan);
+    formData.append("kelas", kelas);
     formData.append("sapaan", respon);
 
     fetch(WEBAPP_URL, {
@@ -110,11 +111,24 @@ startBtn.addEventListener('click', () => {
         if (dariSmamsa || asal_sekolah === 'sma muhammadiyah 1 bandung') {
             asal_sekolah = 'Murid Kesayangan';
             alert(`Selamat datang kembaliii ${asal_sekolah} para guru, wkwkwk`);
+            const angkatan = tanya('Kamu angkatan berapa niicchh? boleehh dong spiill (Contoh: 2022-2025)');
+
+            if (angkatan !== '2022-2025') {
+                const kelas = tanya(`OOOWWHH dari angkatan ${angkatan} toohh, kelas apaa niihh?`);
+                const nama = tanya('Namanya siapaaa niiihhh? spill dong namanya wahai alumni SMAMSA wkwk');
+                const sapaan = tanya(`Haaaiii ${nama}, btw ${nama} apa kabarnyaa niiihhh? kalo baik alhamdulillah, kalo kurang baik semoga lekas lebih baik lagi aamiin, cieee kangen SMAMSA wkwkwk, selamat bernostalgiaaa yaa wahai alumni SMAMSA xixi`);
+            
+                kirimData(nama, '-', asal_sekolah, angkatan, kelas.toUpperCase(), sapaan);
+                musikOtomatis();
+                document.body.classList.remove('no-scroll');
+                document.getElementById('scrollHint').classList.add('visible');
+                return;
+            }
 
             let kelas;
             while (true) {
                 try {
-                    kelas = tanya('Kamu dari kelas apa niiihh??? (IPS atau MIPA)').toLowerCase();
+                    kelas = tanya('WAAHH ANGKATAN SPESIAALL, Kamu dari kelas apa niiihh??? (IPS atau MIPA)').toLowerCase();
                     if (kelas === 'ips' || kelas === 'mipa') break;
                     alert('Kelas apaan tuuhh? Gak ada di SMAMSA kelas itu, isinya yang beneerr kocaakk');
                 } catch (err) {
