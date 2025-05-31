@@ -103,7 +103,6 @@ startBtn.addEventListener('click', () => {
         let asal_sekolah_input = tanya('Kamu dari sekolah mana niiihhh? kali aja kita tetanggaan, wkwkwk atau malah satu almamater? eaaa')
             .toLowerCase()
             .trim()
-            .replace(/\s+/g, '');
 
         let asal_sekolah = asal_sekolah_input; 
         const dariSmamsa = asal_sekolah.includes('smamsa') || asal_sekolah.includes('sma muhammadiyah 1')   
