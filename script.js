@@ -38,6 +38,65 @@ const WEBAPP_URL = "https://script.google.com/macros/s/AKfycbwOQ4G8Rp_SRlUIoLrJC
 const startBtn = document.getElementById('startBtn');
 const musicBtn = document.getElementById('musicBtn');
 const audio = document.getElementById('backsound');
+const nostalgiaAngkatan = {
+    "Angkatan 2022-2025": [
+
+    ],
+    "Angkatan 2021-2024": [
+
+    ],
+    "Angkatan 2020-2023": [
+
+    ],
+    "Angkatan 2019-2022": [
+
+    ],
+    "Angkatan 2024-2027": [
+
+    ],
+    "Angkatan 2023-2026": [
+
+    ],
+    
+};
+
+let currentSlideIndex = 0;
+let currentAngkatan = null;
+
+function tampilkanSlideShow() {
+    const carousel = document.getElementById('carousel');
+    carousel.innerHTML = '';
+
+    const img = document.createElement('img');
+    img.src = nostalgiaAngkatan[currentAngkatan][currentSlideIndex];
+    img.className = 'slideshow-img';
+
+    const backBtn = document.createElement('button');
+    backBtn.textContent = '◀';
+    backBtn.className = 'nav-btn kiri';
+    backBtn.onclick = () => {
+        currentSlideIndex = (currentSlideIndex - 1 + nostalgiaAngkatan[currentAngkatan].length) % nostalgiaAngkatan[currentAngkatan].length;
+        img.src = nostalgiaAngkatan[currentAngkatan][currentSlideIndex];
+    };
+
+    const nextBtn = document.createElement('button');
+    nextBtn.textContent = '▶';
+    nextBtn.className = 'nav-btn kanan';
+    nextBtn.onclick = () => {
+        currentSlideIndex = (currentSlideIndex + 1) % nostalgiaAngkatan[currentAngkatan].length;
+        img.src = nostalgiaAngkatan[currentAngkatan][currentSlideIndex];
+    };
+
+    const backToFolders = document.createElement('button');
+    backToFolders.textContent = '🔙 Kembali ke Folder';
+    backToFolders.className = 'back-btn';
+    backToFolders.onclick = () => location.reload();
+
+    carousel.appendChild(backBtn);
+    carousel.appendChild(img);
+    carousel.appendChild(nextBtn);
+    carousel.appendChild(backToFolders);
+}
 
 let musikNyala = false;
 let musikManual = false;
@@ -127,8 +186,8 @@ startBtn.addEventListener('click', () => {
             let kelas;
             while (true) {
                 try {
-                    kelas = tanya('WAAHH ANGKATAN SPESIAALL, Kamu dari kelas apa niiihh??? (IPS atau MIPA)').toLowerCase();
-                    if (kelas === 'ips' || kelas === 'mipa') break;
+                    kelas = tanya('WAAHH ANGKATAN SPESIAALL, Kamu dari kelas apa niiihh??? (IPS atau MIPA)').toUpperCase();
+                    if (kelas === 'IPS' || kelas === 'MIPA') break;
                     alert('Kelas apaan tuuhh? Gak ada di SMAMSA kelas itu, isinya yang beneerr kocaakk');
                 } catch (err) {
                     console.log(err.message);
@@ -136,7 +195,7 @@ startBtn.addEventListener('click', () => {
                 }
             }
 
-            const daftarNama = (kelas === 'ips') ? nama_siswa_kelas_12IPS : nama_siswa_kelas_12MIPA;
+            const daftarNama = (kelas === 'IPS') ? nama_siswa_kelas_12IPS : nama_siswa_kelas_12MIPA;
             alert(`Owh kamu dari kelas ${kelas}, berarti kamu salah satu dari:\n${daftarNama.map(n => '- ' + n).join('\n')}`);
 
             let nama;
@@ -287,7 +346,7 @@ startBtn.addEventListener('click', () => {
             const namaTamu = tanya('Kalau boleh tau, siapa namanya niicchh?');
             const keperluan = tanya('Ada keperluan apa niicchh? mampir ke web SMAMSA Nostalgic, just asking hehe');
             alert(`Owwhh mau ${keperluan}, sekali lagi selamat datang di SMAMSA Nostalgic, semoga betaaahh yaaa ${namaTamu}, selamat menikmati SMAMSA Nostalgic ${namaTamu}`);
-            kirimData(namaTamu, "00-00-0000", "Tamu Kehormatan", asal_sekolah, keperluan);
+            kirimData(namaTamu, "Tamu Kehormatan", asal_sekolah, "Tamu Kehormatan", "Tamu Kehormatan", keperluan);
             musikOtomatis();
             
             document.body.classList.remove('no-scroll');
@@ -323,6 +382,9 @@ tontonBtn.addEventListener('click', () => {
 });
 
 selesaiBtn.addEventListener('click', () => {
+    const video = document.getElementById('videoKenangan');
+    video.pause();
+    video.currentTime = 0;
     audio.currentTime = 0;
     audio.play().catch(err => console.log('Gagal mainkan musik ulang:', err));
     musikNyala = true;
