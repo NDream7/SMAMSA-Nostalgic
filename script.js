@@ -98,6 +98,25 @@ function tampilkanSlideShow() {
     carousel.appendChild(backToFolders);
 }
 
+let currentAngle = 0;
+const totalFolder = 6;
+
+function rotateCarousel(direction) {
+    const carousel = document.getElementById('carousel');
+    const angleStep = 360 / totalFolder;
+    currentAngle += direction * angleStep;
+    carousel.style.transform = `rotateY(${currentAngle}deg)`;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const folders = document.querySelector('.carousel .folder');
+    const step = 360 / folders.length;
+    folders.forEach((el, i) => {
+        const angle = step * i;
+        el.style.transform = `rotateY(${angle}deg) translateZ(300px)`;
+    });
+});
+
 let musikNyala = false;
 let musikManual = false;
 
