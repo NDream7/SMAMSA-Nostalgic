@@ -124,14 +124,16 @@ h1 {
     align-items: center;
     margin-bottom: 20px;
     overflow: visible;
+    position: relative;
 }
 
 .carousel {
-    width: 100%;
+    width: 400px;
     height: 100%;
     position: relative;
     transform-style: preserve-3d;
     transition: transform 1s;
+    transform-origin: center center;
 }
 
 .folder {
@@ -179,6 +181,14 @@ h1 {
     cursor: pointer;
     user-select: none;
     transition: transform 1s;
+}
+
+#caouselSection h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: white;
+    font-size: 24px;
+    text-shadow: 1px 1px 3px black;
 }
 
 #carouselSection.hidden {
