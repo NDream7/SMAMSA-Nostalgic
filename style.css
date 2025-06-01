@@ -124,6 +124,7 @@ h1 {
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
 }
 
 .carousel {
@@ -131,6 +132,7 @@ h1 {
     height: 100%;
     position: relative;
     transform-style: preserve-3d;
+    transform: rotateY(0deg);
     transition: transform 1s;
 }
 
@@ -163,7 +165,23 @@ h1 {
     background-color: #45a049;
 }
 
-#carouselSelection.show {
+.carousel .folder {
+    position: absolute;
+    width: 150px;
+    height: 100px;
+    background: #ffc107;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    cursor: pointer;
+    user-select: none;
+    transition: transform 1s;
+}
+
+#carouselSection.show {
     display: block;
     animation: fadeIn 0.8 ease;
 }

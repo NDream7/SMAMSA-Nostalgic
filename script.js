@@ -115,15 +115,6 @@ function setFolder3DLayout() {
     })
 }
 
-function setFolder3DLayout() {
-    const folders = document.querySelectorAll('.carousel .folder');
-    const step = 360 / folders.length;
-    folders.forEach((el, i) => {
-        const angle = step * i;
-        el.style.transform = `rotateY(${angle}deg) translateZ(300px)`;
-    });
-};
-
 let musikNyala = false;
 let musikManual = false;
 
@@ -383,9 +374,13 @@ startBtn.addEventListener('click', () => {
     } catch (error) {
         console.log(error.message);
     }
-
+    document.getElementById('carouselSection').style.display = 'block';
     document.getElementById('carouselSection').classList.add('show');
-    setFolder3DLayout();
+    document.addEventListener('DOMContentLoaded', () => {
+        if (document.body.classList.contains('no-scroll')) {
+            setFolder3DLayout();
+        }    
+    });
 });
 
 window.addEventListener('scroll', () => {
