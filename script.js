@@ -386,6 +386,7 @@ startBtn.addEventListener('click', () => {
     }
     document.getElementById('carouselSection').style.display = 'block';
     document.getElementById('carouselSection').classList.add('show');
+    setFolder3DLayout();
     document.addEventListener('DOMContentLoaded', () => {
         if (document.body.classList.contains('no-scroll')) {
             setFolder3DLayout();
