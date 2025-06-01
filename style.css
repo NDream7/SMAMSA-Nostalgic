@@ -117,14 +117,13 @@ h1 {
 }
 
 .carousel-container {
-    perspective: 1200px;
-    margin: 40px auto;
-    max-width: 500px;
-    height: 220px;
+    perspective: 1000px;
+    height: 300px;
     display: flex;
-    align-items: center;
     justify-content: center;
-    position: relative;
+    align-items: center;
+    margin-bottom: 20px;
+    overflow: visible;
 }
 
 .carousel {
@@ -132,22 +131,23 @@ h1 {
     height: 100%;
     position: relative;
     transform-style: preserve-3d;
-    transform: rotateY(0deg);
     transition: transform 1s;
 }
 
 .folder {
     position: absolute;
-    width: 140px;
+    width: 150px;
     height: 100px;
-    background-color: #ffe082;
+    background-color: #ffc107;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     display: flex;
-    align-items: center;
     justify-content: center;
-    text-align: center;
-    padding: 10px;
+    align-items: center;
+    font-weight: bold;
+    cursor: pointer;
+    user-select: none;
+    transition: transform 1s;
 }
 
 .controls {
@@ -179,6 +179,10 @@ h1 {
     cursor: pointer;
     user-select: none;
     transition: transform 1s;
+}
+
+#carouselSection.hidden {
+  display: none;
 }
 
 #carouselSection.show {

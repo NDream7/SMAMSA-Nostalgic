@@ -99,11 +99,21 @@ function tampilkanSlideShow() {
 }
 
 let angle = 0;
+let currentRotation = 0;
+const carouselSection = document.getElementById('carouselSection');
 
 function rotateCarousel(direction) {
-    const carousel = document.getElementById('carousel');
-    angle += direction *60;
-    carousel.style.transform = `rotateY(${angle}deg)`;
+  const folders = document.querySelectorAll('.carousel .folder');
+  const step = 360 / folders.length;
+  currentRotation += direction * step;
+
+  const carousel = document.getElementById('carousel');
+  carousel.style.transform = `rotateY(${currentRotation}deg)`;
+
+  folders.forEach((el, i) => {
+    const angle = step * i - currentRotation;
+    el.style.transform = `rotateY(${angle}deg) translateZ(300px)`;
+  });
 }
 
 function setFolder3DLayout() {
