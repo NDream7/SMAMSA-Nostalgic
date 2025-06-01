@@ -109,20 +109,20 @@ function rotateCarousel(direction) {
 function setFolder3DLayout() {
     const folders = document.querySelectorAll('.carousel .folder');
     const step = 360 / folders.length;
-    folders.forEach((elsel, i) => {
+    folders.forEach((el, i) => {
         const angle = step * i;
         el.style.transform = `rotateY(${angle}deg) translateZ(300px)`;
     })
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    const folders = document.querySelector('.carousel .folder');
+function setFolder3DLayout() {
+    const folders = document.querySelectorAll('.carousel .folder');
     const step = 360 / folders.length;
     folders.forEach((el, i) => {
         const angle = step * i;
         el.style.transform = `rotateY(${angle}deg) translateZ(300px)`;
     });
-});
+};
 
 let musikNyala = false;
 let musikManual = false;
@@ -384,7 +384,7 @@ startBtn.addEventListener('click', () => {
         console.log(error.message);
     }
 
-    document.getElementById('carouselSelection').classList.add('show');
+    document.getElementById('carouselSection').classList.add('show');
     setFolder3DLayout();
 });
 
