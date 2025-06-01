@@ -98,14 +98,21 @@ function tampilkanSlideShow() {
     carousel.appendChild(backToFolders);
 }
 
-let currentAngle = 0;
-const totalFolder = 6;
+let angle = 0;
 
 function rotateCarousel(direction) {
     const carousel = document.getElementById('carousel');
-    const angleStep = 360 / totalFolder;
-    currentAngle += direction * angleStep;
-    carousel.style.transform = `rotateY(${currentAngle}deg)`;
+    angle += direction *60;
+    carousel.style.transform = `rotateY(${angle}deg)`;
+}
+
+function setFolder3DLayout() {
+    const folders = document.querySelectorAll('.carousel .folder');
+    const step = 360 / folders.length;
+    folders.forEach((elsel, i) => {
+        const angle = step * i;
+        el.style.transform = `rotateY(${angle}deg) translateZ(300px)`;
+    })
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -376,6 +383,9 @@ startBtn.addEventListener('click', () => {
     } catch (error) {
         console.log(error.message);
     }
+
+    document.getElementById('carouselSelection').classList.add('show');
+    setFolder3DLayout();
 });
 
 window.addEventListener('scroll', () => {
