@@ -109,6 +109,8 @@ function rotateCarousel(direction) {
 
   const carousel = document.getElementById('carousel');
   carousel.style.transform = `rotateY(${currentRotation}deg)`;
+  
+  setFolder3DLayout();
 
   folders.forEach((el, i) => {
     const angle = step * i - currentRotation;
@@ -386,12 +388,7 @@ startBtn.addEventListener('click', () => {
     }
     document.getElementById('carouselSection').style.display = 'block';
     document.getElementById('carouselSection').classList.add('show');
-    setFolder3DLayout();
-    document.addEventListener('DOMContentLoaded', () => {
-        if (document.body.classList.contains('no-scroll')) {
-            setFolder3DLayout();
-        }    
-    });
+    setFolder3DLayout();    
 });
 
 window.addEventListener('scroll', () => {
