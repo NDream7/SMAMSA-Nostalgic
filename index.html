@@ -32,6 +32,25 @@
                 SMA Muhammadiyah 1 Bandung <br>
                 SMAMSA Nostalgic
         </h1>
+
+        <section id="carouselSection" style="display: none;">
+            <h2>Nostalgia dari angkatan berapa niicchh</h2>
+            <div class="carousel-container">
+                <div class="carousel" id="carousel">
+                    <div class="folder">Angkatan 2022-2025</div>
+                    <div class="folder">Angkatan 2021-2024</div>
+                    <div class="folder">Angkatan 2020-2023</div>
+                    <div class="folder">Angkatan 2019-2022</div>
+                    <div class="folder">Angkatan 2024-2027</div>
+                    <div class="folder">Angkatan 2023-2026</div>
+                </div>    
+            </div>
+            <div class="controls">
+                <button onclick="rotateCarousel(-1)">◀ Kiri</button>
+                <button onclick="rotateCarousel(1)">Kanan ▶</button>
+            </div>
+        </section>
+
         <button id="startBtn">Mulai Nostalgia</button>    
     </main>
 
@@ -59,39 +78,7 @@
         </div>
     </section>
 
-    <section id="carouselSection">
-        <h2>Nostalgia dari angkatan berapa niicchh</h2>
-        <div class="carousel-container">
-            <div class="carousel" id="carousel">
-                <div class="folder">Angkatan 2022-2025</div>
-                <div class="folder">Angkatan 2021-2024</div>
-                <div class="folder">Angkatan 2020-2023</div>
-                <div class="folder">Angkatan 2019-2022</div>
-                <div class="folder">Angkatan 2024-2027</div>
-                <div class="folder">Angkatan 2023-2026</div>
-            </div>    
-        </div>
-
-        <div class="folder-carousel">
-            <div class="folder-item" onclick="bukaFolder(1)">
-                <img src="folder-icon.png" alt="Folder A">
-                <p>Folder A</p>
-            </div>
-            <div class="folder-item" onclick="bukaFolder(2)">
-                <img src="folder-icon.png" alt="Folder B">
-                <p>Folder B</p>
-            </div>
-        </div>
-
-        <div class="lightbox" id="lightbox">
-            <img src="" alt="Gambar Kenangan" id="lightboxImg">
-        </div>
-
-        <div class="controls">
-            <button onclick="rotateCarousel(-1)">◀ Kiri</button>
-            <button onclick="rotateCarousel(1)">Kanan ▶</button>
-        </div>
-    </section>
+    
 
     <script src="script.js"></script>
 </body>
