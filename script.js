@@ -105,10 +105,12 @@ const carouselSection = document.getElementById('carouselSection');
 function rotateCarousel(direction) {
     const folders = document.querySelectorAll('.carousel .folder');
     const step = 360 / folders.length;
-    currentRotation += direction * step;
+    currentRotation += direction;
 
-    const carousel = document.querySelector('.carousel');
-    carousel.style.transform = `rotateY(${currentRotation}deg)`;
+    folders.forEach((el, i) => {
+        const angle = step * ((i - currentRotation + folders.length) % folders.length);
+        el.style.transform = `rotateY(${angle}deg) translateZ(300px)`;
+    });
 }
 
 function setFolder3DLayout() {
