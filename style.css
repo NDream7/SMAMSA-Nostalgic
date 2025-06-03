@@ -104,24 +104,24 @@ h1 {
 }
 .carousel-container {
     perspective: 1000px;
-    height: 320px;
+    height: 300px;
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: visible;
+    margin-bottom: 20px;
+    overflow: visible; 
     position: relative;
 }
 .carousel {
-    width: 100%;
+    width: 400px;
     height: 100%;
     position: relative;
     transform-style: preserve-3d;
-    transition: transform 1s ease;
     transform-origin: center center;
 }
 .folder {
     position: absolute;
-    width: 160px;
+    width: 150px;
     height: 100px;
     background-color: #ffc107;
     border-radius: 10px;
@@ -133,6 +133,8 @@ h1 {
     cursor: pointer;
     user-select: none;
     backface-visibility: hidden;
+    transform-origin: center center;
+    transition: transform 1s ease;
 }
 .controls {
     text-align: center;
