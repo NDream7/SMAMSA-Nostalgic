@@ -110,8 +110,6 @@ function rotateCarousel(direction) {
   const carousel = document.querySelector('.carousel');
   carousel.style.transform = `rotateY(${currentRotation}deg)`;
   
-  setFolder3DLayout();
-
   folders.forEach((el, i) => {
     const angle = step * i - currentRotation;
     el.style.transform = `rotateY(${angle}deg) translateZ(300px)`;
