@@ -103,17 +103,12 @@ let currentRotation = 0;
 const carouselSection = document.getElementById('carouselSection');
 
 function rotateCarousel(direction) {
-  const folders = document.querySelectorAll('.carousel .folder');
-  const step = 360 / folders.length;
-  currentRotation += direction * step;
+    const folders = document.querySelectorAll('.carousel .folder');
+    const step = 360 / folders.length;
+    currentRotation += direction * step;
 
-  const carousel = document.querySelector('.carousel');
-  carousel.style.transform = `rotateY(${currentRotation}deg)`;
-  
-  folders.forEach((el, i) => {
-    const angle = step * i - currentRotation;
-    el.style.transform = `rotateY(${angle}deg) translateZ(300px)`;
-  });
+    const carousel = document.querySelector('.carousel');
+    carousel.style.transform = `rotateY(${currentRotation}deg)`;
 }
 
 function setFolder3DLayout() {
@@ -122,7 +117,7 @@ function setFolder3DLayout() {
     folders.forEach((el, i) => {
         const angle = step * i;
         el.style.transform = `rotateY(${angle}deg) translateZ(300px)`;
-    })
+    });
 }
 
 let musikNyala = false;
@@ -420,3 +415,7 @@ selesaiBtn.addEventListener('click', () => {
     musikNyala = true;
     musicBtn.textContent = 'Musik: OFF';
 })
+
+window.addEventListener('DOMContentLoaded', () => {
+    setFolder3DLayout(); 
+});
