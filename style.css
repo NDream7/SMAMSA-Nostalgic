@@ -108,6 +108,7 @@ h1 {
     display: flex;
     justify-content: center;
     align-items: center;
+    align-content: center;
     overflow: visible; 
     position: relative;
 }
@@ -119,6 +120,7 @@ h1 {
     transform-origin: center center;
     justify-content: center;
     align-items: center;
+    align-content: center
 }
 .folder {
     position: absolute;
