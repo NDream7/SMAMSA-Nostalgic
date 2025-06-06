@@ -118,6 +118,8 @@ h1 {
     position: relative;
     transform-style: preserve-3d;
     transform-origin: center center;
+    justify-content: center;
+    align-items: center;
 }
 .folder {
     position: absolute;
