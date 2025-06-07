@@ -62,6 +62,42 @@ const nostalgiaAngkatan = {
 
 let currentSlideIndex = 0;
 let currentAngkatan = null;
+let currentAngle = 0;
+const carousel = document.querySelector('.carousel');
+const folders = document.querySelectorAll('.carousel .folder');
+const folderCount = folders.length;
+const angleStep = 360 / folderCount;
+
+function setFolder3DLayout() {
+    folders.forEach((folder, index) => {
+        const angle = index * angleStep;
+        folder.style.transform = `rotateY(${angle}deg) translateZ(300px)`;
+        folder.style.opacity = '1';
+        folder.style.transition = 'transform 1s ease, opacity 0.5s ease';
+
+        folder.addEventListener('click', () => {
+            currentAngkatan = folder.textContent;
+            if (nostalgiaAngkatan[currentAngkatan] && nostalgiaAngkatan[currentAngkatan].length > 0) {
+                tampilkanSlideShow();
+            } else {
+                alert(`Maaf, belum ada foto untuk ${currentAngkatan}`);
+            }
+        });
+    });
+}
+
+function rotateCarousel(direction) {
+    currentAngle += angleStep * direction;
+    carousel.style.transform = `translateZ(-300px) rotateY(${currentAngle}deg)`;
+    
+    // Animasi opacity untuk efek lebih smooth
+    folders.forEach(folder => {
+        folder.style.opacity = '0.5';
+        setTimeout(() => {
+            folder.style.opacity = '1';
+        }, 300);
+    });
+}
 
 function tampilkanSlideShow() {
     const carousel = document.getElementById('carousel');
@@ -96,30 +132,6 @@ function tampilkanSlideShow() {
     carousel.appendChild(img);
     carousel.appendChild(nextBtn);
     carousel.appendChild(backToFolders);
-}
-
-let angle = 0;
-let currentRotation = 0;
-const carouselSection = document.getElementById('carouselSection');
-
-function rotateCarousel(direction) {
-    const folders = document.querySelectorAll('.carousel .folder');
-    const step = 360 / folders.length;
-    currentRotation += direction;
-
-    folders.forEach((el, i) => {
-        const angle = step * ((i - currentRotation + folders.length) % folders.length);
-        el.style.transform = `rotateY(${angle}deg) translateZ(300px)`;
-    });
-}
-
-function setFolder3DLayout() {
-    const folders = document.querySelectorAll('.carousel .folder');
-    const step = 360 / folders.length;
-    folders.forEach((el, i) => {
-        const angle = step * i;
-        el.style.transform = `rotateY(${angle}deg) translateZ(300px)`;
-    });
 }
 
 let musikNyala = false;
