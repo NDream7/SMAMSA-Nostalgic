@@ -145,10 +145,13 @@ h1 {
     text-align: center;
     padding: 10px;
     box-sizing: border-box;
+    transform-style: preserve-3d;
+    backface-visibility: visible;
+    opacity: 1;
 }
 
 .folder:hover {
-    transform: scale(1.1) !important;
+    transform: scale(1.1);
     background-color: #ffca28;
     z-index: 10;
 }
