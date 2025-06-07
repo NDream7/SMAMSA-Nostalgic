@@ -69,17 +69,11 @@ const folderCount = folders.length;
 const angleStep = 360 / folderCount;
 
 function setFolder3DLayout() {
-    const radius = Math.min(window.innerWidth, 600) * 0.4; // Radius berdasarkan ukuran layar
-    
     folders.forEach((folder, index) => {
-        const angle = (index * angleStep) * (Math.PI / 180); // Konversi ke radian
-        const x = radius * Math.sin(angle);
-        const z = radius * Math.cos(angle) - radius; // Kurangi radius untuk memusatkan
-        
-        folder.style.transform = `translateX(${x}px) translateZ(${z}px) rotateY(${index * angleStep}deg)`;
+        const angle = index * angleStep;
+        folder.style.transform = `rotateY(${angle}deg) translateZ(300px)`;
         folder.style.opacity = '1';
         folder.style.transition = 'transform 1s ease, opacity 0.5s ease';
-        folder.style.position = 'absolute';
 
         folder.addEventListener('click', () => {
             currentAngkatan = folder.textContent;
@@ -94,16 +88,14 @@ function setFolder3DLayout() {
 
 function rotateCarousel(direction) {
     currentAngle += angleStep * direction;
-    carousel.style.transform = `rotateY(${currentAngle}deg)`;
+    carousel.style.transform = `translateZ(-300px) rotateY(${currentAngle}deg)`;
     
-    // Update transform untuk setiap folder
-    folders.forEach((folder, index) => {
-        const folderAngle = (index * angleStep - currentAngle) * (Math.PI / 180);
-        const radius = Math.min(window.innerWidth, 600) * 0.4;
-        const x = radius * Math.sin(folderAngle);
-        const z = radius * Math.cos(folderAngle) - radius;
-        
-        folder.style.transform = `translateX(${x}px) translateZ(${z}px) rotateY(${-currentAngle + index * angleStep}deg)`;
+    // Animasi opacity untuk efek lebih smooth
+    folders.forEach(folder => {
+        folder.style.opacity = '0.5';
+        setTimeout(() => {
+            folder.style.opacity = '1';
+        }, 300);
     });
 }
 
@@ -141,6 +133,7 @@ function tampilkanSlideShow() {
     carousel.appendChild(nextBtn);
     carousel.appendChild(backToFolders);
 }
+
 
 let musikNyala = false;
 let musikManual = false;
