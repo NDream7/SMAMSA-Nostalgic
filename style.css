@@ -132,6 +132,7 @@ h1 {
     display: flex;
     justify-content: center;
     align-items: center;
+    align-content: center;
     font-weight: bold;
     cursor: pointer;
     user-select: none;
