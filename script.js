@@ -71,7 +71,7 @@ const angleStep = 360 / folderCount;
 function setFolder3DLayout() {
     folders.forEach((folder, index) => {
         const angle = index * angleStep;
-        folder.style.transform = `rotateY(${angle}deg) translateZ(300px)`;
+        folder.style.transform = `rotateY(${angle}deg) translateZ(300px) rotateY(-${angle}deg)`;
         folder.style.opacity = '1';
         folder.style.transition = 'transform 1s ease, opacity 0.5s ease';
 
@@ -90,12 +90,9 @@ function rotateCarousel(direction) {
     currentAngle += angleStep * direction;
     carousel.style.transform = `translateZ(-300px) rotateY(${currentAngle}deg)`;
     
-    // Animasi opacity untuk efek lebih smooth
-    folders.forEach(folder => {
-        folder.style.opacity = '0.5';
-        setTimeout(() => {
-            folder.style.opacity = '1';
-        }, 300);
+    folders.forEach((folder, index) => {
+        const angle = index * angleStep - currentAngle;
+        folder.style.transform = `rotateY(${angle}deg) translateZ(300px) rotateY(-${angle}deg)`;
     });
 }
 
