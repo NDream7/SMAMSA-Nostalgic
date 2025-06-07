@@ -110,10 +110,11 @@ h1 {
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: visible; 
+    overflow: visible;
     position: relative;
     margin: 0 auto;
     width: 100%;
+    transform-style: preserve-3d;
 }
 
 .carousel {
@@ -146,12 +147,10 @@ h1 {
     padding: 10px;
     box-sizing: border-box;
     transform-style: preserve-3d;
-    backface-visibility: visible;
-    opacity: 1;
 }
 
 .folder:hover {
-    transform: scale(1.1);
+    transform: scale(1.1) !important;
     background-color: #ffca28;
     z-index: 10;
 }
