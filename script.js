@@ -67,18 +67,29 @@ const carousel = document.querySelector('.carousel');
 const folders = document.querySelectorAll('.carousel .folder');
 const folderCount = folders.length;
 const angleStep = 360 / folderCount;
+const radius = 350; // Jarak folder dari pusat
+let targetAngle = 0;
+let isAnimating = false;
 
 function setFolder3DLayout() {
+    const angleStep = 360 / folders.length;
+    
     folders.forEach((folder, index) => {
-        const angle = (index * angleStep) % 360;
-        // Format transformasi baru untuk membuat folder selalu menghadap ke depan
-        folder.style.transform = `rotateY(${angle}deg) translateZ(300px) rotateY(-${angle}deg)`;
+        const angle = index * angleStep;
+        const radian = angle * (Math.PI / 180);
+        
+        // Hitung posisi 3D
+        const x = Math.sin(radian) * radius;
+        const z = Math.cos(radian) * radius;
+        
+        folder.style.transform = `translateX(${x}px) translateZ(${z}px) rotateY(${-angle}deg)`;
         folder.style.opacity = '1';
-        folder.style.transition = 'transform 1s ease, opacity 0.5s ease';
+        folder.style.transition = 'transform 1s cubic-bezier(0.17, 0.67, 0.21, 0.99), opacity 0.5s ease';
 
         folder.addEventListener('click', () => {
+            if (isAnimating) return;
             currentAngkatan = folder.textContent;
-            if (nostalgiaAngkatan[currentAngkatan] && nostalgiaAngkatan[currentAngkatan].length > 0) {
+            if (nostalgiaAngkatan[currentAngkatan]?.length > 0) {
                 tampilkanSlideShow();
             } else {
                 alert(`Maaf, belum ada foto untuk ${currentAngkatan}`);
@@ -88,14 +99,48 @@ function setFolder3DLayout() {
 }
 
 function rotateCarousel(direction) {
-    currentAngle = (currentAngle + angleStep * direction) % 360;
-    carousel.style.transform = `translateZ(-300px) rotateY(${currentAngle}deg)`;
+    if (isAnimating) return;
     
-    // Update transformasi setiap folder untuk tetap menghadap ke depan
+    isAnimating = true;
+    targetAngle += (360 / folders.length) * direction;
+    
+    // Animasi dengan easing
+    const animate = () => {
+        const diff = targetAngle - currentAngle;
+        
+        if (Math.abs(diff) < 0.1) {
+            currentAngle = targetAngle;
+            isAnimating = false;
+            updateFoldersPosition();
+            return;
+        }
+        
+        currentAngle += diff * 0.1;
+        updateFoldersPosition();
+        requestAnimationFrame(animate);
+    };
+    
+    animate();
+}
+
+function updateFoldersPosition() {
+    const angleStep = 360 / folders.length;
+    
     folders.forEach((folder, index) => {
         const angle = (index * angleStep - currentAngle) % 360;
-        folder.style.transform = `rotateY(${angle}deg) translateZ(300px) rotateY(-${angle}deg)`;
+        const radian = angle * (Math.PI / 180);
+        
+        const x = Math.sin(radian) * radius;
+        const z = Math.cos(radian) * radius;
+        
+        folder.style.transform = `translateX(${x}px) translateZ(${z}px) rotateY(${-angle}deg)`;
+        
+        // Atur opacity berdasarkan posisi
+        const opacity = 0.7 + (Math.cos(radian) * 0.3);
+        folder.style.opacity = opacity.toString();
     });
+    
+    carousel.style.transform = `rotateY(${currentAngle}deg)`;
 }
 
 function tampilkanSlideShow() {
@@ -432,4 +477,5 @@ selesaiBtn.addEventListener('click', () => {
 
 window.addEventListener('DOMContentLoaded', () => {
     setFolder3DLayout(); 
+    updateFoldersPosition();
 });
