@@ -67,61 +67,34 @@ const carousel = document.querySelector('.carousel');
 const folders = document.querySelectorAll('.carousel .folder');
 const folderCount = folders.length;
 const angleStep = 360 / folderCount;
-const radius = 250; // Jarak dari pusat
 
-// Inisialisasi Posisi Folder
-function initCarousel() {
-    const angleStep = 360 / folders.length;
-    
+function setFolder3DLayout() {
     folders.forEach((folder, index) => {
         const angle = index * angleStep;
-        const radian = angle * (Math.PI / 180);
-        
-        // Hitung posisi 3D
-        const x = Math.sin(radian) * radius;
-        const z = Math.cos(radian) * radius;
-        
-        // Terapkan transformasi
-        folder.style.transform = `translateX(${x}px) translateZ(${z}px) rotateY(${-angle}deg)`;
-        
-        // Event listener untuk klik
+        // Format transformasi baru
+        folder.style.transform = `rotateY(${angle}deg) translateZ(300px) rotateY(-${angle}deg)`;
+        folder.style.opacity = '1';
+        folder.style.transition = 'transform 1s ease, opacity 0.5s ease';
+
         folder.addEventListener('click', () => {
-            const angkatan = folder.textContent;
-            if (confirm(`Buka nostalgia ${angkatan}?`)) {
-                // Logika ketika folder diklik
+            currentAngkatan = folder.textContent;
+            if (nostalgiaAngkatan[currentAngkatan] && nostalgiaAngkatan[currentAngkatan].length > 0) {
+                tampilkanSlideShow();
+            } else {
+                alert(`Maaf, belum ada foto untuk ${currentAngkatan}`);
             }
         });
     });
 }
 
-// Fungsi Rotasi
 function rotateCarousel(direction) {
-    const angleStep = 360 / folders.length;
     currentAngle += angleStep * direction;
+    carousel.style.transform = `translateZ(-300px) rotateY(${currentAngle}deg)`;
     
-    // Terapkan rotasi ke carousel
-    carousel.style.transform = `rotateY(${currentAngle}deg)`;
-    
-    // Update posisi masing-masing folder
-    updateFolders();
-}
-
-// Update Posisi Folder
-function updateFolders() {
-    const angleStep = 360 / folders.length;
-    
+    // Update transformasi setiap folder
     folders.forEach((folder, index) => {
-        const angle = (index * angleStep - currentAngle) % 360;
-        const radian = angle * (Math.PI / 180);
-        
-        const x = Math.sin(radian) * radius;
-        const z = Math.cos(radian) * radius;
-        
-        folder.style.transform = `translateX(${x}px) translateZ(${z}px) rotateY(${-angle}deg)`;
-        
-        // Atur opacity berdasarkan posisi
-        const opacity = 0.6 + 0.4 * (1 - Math.abs(angle)/180);
-        folder.style.opacity = opacity;
+        const angle = index * angleStep - currentAngle;
+        folder.style.transform = `rotateY(${angle}deg) translateZ(300px) rotateY(-${angle}deg)`;
     });
 }
 
