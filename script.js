@@ -70,8 +70,8 @@ const angleStep = 360 / folderCount;
 
 function setFolder3DLayout() {
     folders.forEach((folder, index) => {
-        const angle = index * angleStep;
-        // Transformasi baru untuk membuat folder selalu menghadap ke depan
+        const angle = (index * angleStep) % 360;
+        // Format transformasi baru untuk membuat folder selalu menghadap ke depan
         folder.style.transform = `rotateY(${angle}deg) translateZ(300px) rotateY(-${angle}deg)`;
         folder.style.opacity = '1';
         folder.style.transition = 'transform 1s ease, opacity 0.5s ease';
@@ -88,12 +88,12 @@ function setFolder3DLayout() {
 }
 
 function rotateCarousel(direction) {
-    currentAngle += angleStep * direction;
+    currentAngle = (currentAngle + angleStep * direction) % 360;
     carousel.style.transform = `translateZ(-300px) rotateY(${currentAngle}deg)`;
     
-    // Perbarui transformasi setiap folder untuk tetap menghadap ke depan
+    // Update transformasi setiap folder untuk tetap menghadap ke depan
     folders.forEach((folder, index) => {
-        const angle = index * angleStep - currentAngle;
+        const angle = (index * angleStep - currentAngle) % 360;
         folder.style.transform = `rotateY(${angle}deg) translateZ(300px) rotateY(-${angle}deg)`;
     });
 }
