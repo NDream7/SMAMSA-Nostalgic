@@ -67,11 +67,10 @@ const carousel = document.querySelector('.carousel');
 const folders = document.querySelectorAll('.carousel .folder');
 const folderCount = folders.length;
 const angleStep = 360 / folderCount;
-const radius = 350; // Jarak folder dari pusat
-let targetAngle = 0;
-let isAnimating = false;
+const radius = 250; // Jarak dari pusat
 
-function setFolder3DLayout() {
+// Inisialisasi Posisi Folder
+function initCarousel() {
     const angleStep = 360 / folders.length;
     
     folders.forEach((folder, index) => {
@@ -82,48 +81,33 @@ function setFolder3DLayout() {
         const x = Math.sin(radian) * radius;
         const z = Math.cos(radian) * radius;
         
+        // Terapkan transformasi
         folder.style.transform = `translateX(${x}px) translateZ(${z}px) rotateY(${-angle}deg)`;
-        folder.style.opacity = '1';
-        folder.style.transition = 'transform 1s cubic-bezier(0.17, 0.67, 0.21, 0.99), opacity 0.5s ease';
-
+        
+        // Event listener untuk klik
         folder.addEventListener('click', () => {
-            if (isAnimating) return;
-            currentAngkatan = folder.textContent;
-            if (nostalgiaAngkatan[currentAngkatan]?.length > 0) {
-                tampilkanSlideShow();
-            } else {
-                alert(`Maaf, belum ada foto untuk ${currentAngkatan}`);
+            const angkatan = folder.textContent;
+            if (confirm(`Buka nostalgia ${angkatan}?`)) {
+                // Logika ketika folder diklik
             }
         });
     });
 }
 
+// Fungsi Rotasi
 function rotateCarousel(direction) {
-    if (isAnimating) return;
+    const angleStep = 360 / folders.length;
+    currentAngle += angleStep * direction;
     
-    isAnimating = true;
-    targetAngle += (360 / folders.length) * direction;
+    // Terapkan rotasi ke carousel
+    carousel.style.transform = `rotateY(${currentAngle}deg)`;
     
-    // Animasi dengan easing
-    const animate = () => {
-        const diff = targetAngle - currentAngle;
-        
-        if (Math.abs(diff) < 0.1) {
-            currentAngle = targetAngle;
-            isAnimating = false;
-            updateFoldersPosition();
-            return;
-        }
-        
-        currentAngle += diff * 0.1;
-        updateFoldersPosition();
-        requestAnimationFrame(animate);
-    };
-    
-    animate();
+    // Update posisi masing-masing folder
+    updateFolders();
 }
 
-function updateFoldersPosition() {
+// Update Posisi Folder
+function updateFolders() {
     const angleStep = 360 / folders.length;
     
     folders.forEach((folder, index) => {
@@ -136,11 +120,9 @@ function updateFoldersPosition() {
         folder.style.transform = `translateX(${x}px) translateZ(${z}px) rotateY(${-angle}deg)`;
         
         // Atur opacity berdasarkan posisi
-        const opacity = 0.7 + (Math.cos(radian) * 0.3);
-        folder.style.opacity = opacity.toString();
+        const opacity = 0.6 + 0.4 * (1 - Math.abs(angle)/180);
+        folder.style.opacity = opacity;
     });
-    
-    carousel.style.transform = `rotateY(${currentAngle}deg)`;
 }
 
 function tampilkanSlideShow() {
@@ -477,5 +459,5 @@ selesaiBtn.addEventListener('click', () => {
 
 window.addEventListener('DOMContentLoaded', () => {
     setFolder3DLayout(); 
-    updateFoldersPosition();
+    updateFolders();
 });
