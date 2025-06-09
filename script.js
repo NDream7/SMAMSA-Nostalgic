@@ -69,10 +69,17 @@ const folderCount = folders.length;
 const angleStep = 360 / folderCount;
 
 function setFolder3DLayout() {
+    const radius = 300; // Radius carousel
+    const folders = document.querySelectorAll('.carousel-3d .folder');
+    const angleStep = (Math.PI * 2) / folders.length;
+    
     folders.forEach((folder, index) => {
-        const angle = index * angleStep;
-        // Transformasi baru untuk membuat folder selalu menghadap ke depan
-        folder.style.transform = `rotateY(${angle}deg) translateZ(300px) rotateY(-${angle}deg)`;
+        const angle = angleStep * index;
+        const x = Math.sin(angle) * radius;
+        const z = Math.cos(angle) * radius;
+        
+        // Transformasi untuk posisi melingkar dan tetap menghadap depan
+        folder.style.transform = `translateX(${x}px) translateZ(${z}px) rotateY(${-angle}rad)`;
         folder.style.opacity = '1';
         folder.style.transition = 'transform 1s ease, opacity 0.5s ease';
 
@@ -88,13 +95,22 @@ function setFolder3DLayout() {
 }
 
 function rotateCarousel(direction) {
+    const angleStep = (Math.PI * 2) / folderCount;
     currentAngle += angleStep * direction;
-    carousel.style.transform = `translateZ(-300px) rotateY(${currentAngle}deg)`;
     
-    // Perbarui transformasi setiap folder untuk tetap menghadap ke depan
+    const carousel = document.querySelector('.carousel-3d');
+    carousel.style.transform = `rotateY(${currentAngle}rad)`;
+    
+    // Perbarui posisi setiap folder
+    const folders = document.querySelectorAll('.carousel-3d .folder');
+    const radius = 300;
+    
     folders.forEach((folder, index) => {
-        const angle = index * angleStep - currentAngle;
-        folder.style.transform = `rotateY(${angle}deg) translateZ(300px) rotateY(-${angle}deg)`;
+        const angle = angleStep * index - currentAngle;
+        const x = Math.sin(angle) * radius;
+        const z = Math.cos(angle) * radius;
+        
+        folder.style.transform = `translateX(${x}px) translateZ(${z}px) rotateY(${-angle}rad)`;
     });
 }
 
