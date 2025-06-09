@@ -109,7 +109,8 @@ h1 {
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: visible;
+    overflow: visible; 
+    position: relative;
     margin: 0 auto;
     width: 100%;
 }
@@ -120,6 +121,9 @@ h1 {
     position: relative;
     transform-style: preserve-3d;
     transition: transform 1s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .folder {
@@ -136,16 +140,15 @@ h1 {
     cursor: pointer;
     backface-visibility: visible;
     transform-style: preserve-3d;
-    transition: transform 0.5s ease, background-color 0.3s;
+    transition: all 0.5s ease;
     text-align: center;
     padding: 10px;
     box-sizing: border-box;
-    /* Membuat folder selalu menghadap ke depan */
-    transform: rotateY(0deg) translateZ(300px);
+    opacity: 1 !important;
 }
 
 .folder:hover {
-    transform: scale(1.1) translateZ(300px) !important;
+    transform: scale(1.1) !important;
     background-color: #ffca28;
     z-index: 10;
 }
