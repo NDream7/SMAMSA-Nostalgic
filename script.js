@@ -360,51 +360,55 @@ selesaiBtn.addEventListener('click', () => {
 window.addEventListener('DOMContentLoaded', () => { 
 });
 
-let carouselAngle = 0;
+const container = document.getElementById('carouselContainer');
 const folderList = [
-    "2024-2027", "2023-2026", "2022-2025",
-    "2021-2024", "2020-2023", "2019-2022"
+  "2024-2027", "2023-2026", "2022-2025",
+  "2021-2024", "2020-2023", "2019-2022"
 ];
 
+let carouselAngle = 0;
+
 function setFolder3DLayout() {
-    const container = document.getElementById('carouselContainer');
-    if (!container) return;
+  container.innerHTML = '';
+  const total = folderList.length;
+  const step = 360 / total;
 
-    container.innerHTML = '';
-    const total = folderList.length;
-    const angleStep = 360 / total;
+  folderList.forEach((angkatan, i) => {
+    const el = document.createElement('div');
+    el.className = 'folder';
+    el.textContent = `Angkatan ${angkatan}`;
+    container.appendChild(el);
+  });
 
-    folderList.forEach((angkatan, i) => {
-        const el = document.createElement('div');
-        el.className = 'folder';
-        el.textContent = `Angkatan ${angkatan}`;
-        const angle = angleStep * i;
-        el.style.transform = `
-            rotateY(${angle}deg)
-            translateZ(300px)
-        `;
-        container.appendChild(el);
-    });
-
-    rotateCarousel(0);
+  updateCarouselRotation();
 }
 
 function rotateCarousel(direction) {
-    const step = 360 / folderList.length;
-    carouselAngle += step * direction;
-    updateFolders();
+  const step = 360 / folderList.length;
+  carouselAngle += direction * step;
+  updateCarouselRotation();
 }
 
-function updateFolders() {
-    const folders = document.querySelectorAll('.folder');
-    const total = folders.length;
-    const angleStep = 360 / total;
+function updateCarouselRotation() {
+  const folders = container.querySelectorAll('.folder');
+  const total = folders.length;
+  const step = 360 / total;
 
-    folders.forEach((folder, i) => {
-        const angle = angleStep * i + carouselAngle;
-        folder.style.transform = `
-            rotateY(${angle}deg)
-            translateZ(300px)
-        `;
-    });
+  folders.forEach((folder, i) => {
+    const angle = i * step - (carouselAngle % 360);
+    const rad = angle * (Math.PI / 180);
+    const x = Math.sin(rad) * 300;
+    const z = Math.cos(rad) * 300;
+
+    folder.style.transform = `translateX(${x}px) translateZ(${z}px) rotateY(${-angle}deg)`;
+
+    const angleNormalized = ((angle % 360) + 360) % 360;
+    if (angleNormalized < 30 || angleNormalized > 330) {
+      folder.classList.add('highlight');
+    } else {
+      folder.classList.remove('highlight');
+    }
+  });
 }
+
+window.addEventListener('DOMContentLoaded', setFolder3DLayout);

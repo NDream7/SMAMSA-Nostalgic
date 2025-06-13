@@ -10,24 +10,25 @@
 <body class="no-scroll">
     
     <div class="logo-container">
-        <img src="logo muhammadiyah.png" alt="Logo Muhammadiyah">
-        <img src="logo smamsa.png" alt="Logo SMAMSA">
-        <img src="logo ipm.png" alt="Logo IPM">
-        <img src="logo hw.png.png" alt="Logo Hizbul Wathan">
-        <img src="logo tapak suci.png" alt="Logo Tapak Suci">
-        <img src="logo lsm.png" alt="Logo LSM SMAMSA">
+        <img src="logo/logo muhammadiyah.png" alt="Logo Muhammadiyah">
+        <img src="logo/logo smamsa.png" alt="Logo SMAMSA">
+        <img src="logo/logo ipm.png" alt="Logo IPM">
+        <img src="logo/logo hw.png.png" alt="Logo Hizbul Wathan">
+        <img src="logo/logo tapak suci.png" alt="Logo Tapak Suci">
+        <img src="logo/logo lsm.png" alt="Logo LSM SMAMSA">
     </div>
 
     <section id="carouselSection" style="display: none;">
-        <h2>✨ Nostalgia Angkatan ✨</h2>
-        <div class="carousel-wrapper">
-        <div class="carousel-container" id="carouselContainer"></div>
-        <div class="controls">
-            <button onclick="rotateCarousel(-1)">⬅️ Geser Kiri</button>
-            <button onclick="rotateCarousel(1)">➡️ Geser Kanan</button>
+        <h2>✨ Koleksi Nostalgia Angkatan ✨</h2>
+        <div class="carousel-container" id="carouselContainer">
+            <!-- Folder cards dimuat dari JS -->
         </div>
+        <div class="controls">
+            <button onclick="rotateCarousel(-1)">⬅️ Sebelumnya</button>
+            <button onclick="rotateCarousel(1)">➡️ Berikutnya</button>
         </div>
     </section>
+
 
     <audio id="backsound" src="mars smamsa.mp3" loop></audio>   
     
@@ -64,7 +65,13 @@
         </div>
     </section>
 
-    
+    <div id="folderModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="tutupModal()">&times;</span>
+            <h3 id="judulModal"></h3>
+            <div id="isiFolder" class="foto-grid"></div>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>
