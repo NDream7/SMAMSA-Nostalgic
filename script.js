@@ -60,79 +60,6 @@ const nostalgiaAngkatan = {
     
 };
 
-let currentSlideIndex = 0;
-let currentAngkatan = null;
-let currentAngle = 0;
-const carousel = document.querySelector('.carousel');
-const folders = document.querySelectorAll('.carousel .folder');
-const folderCount = folders.length;
-const angleStep = 360 / folderCount;
-
-function setFolder3DLayout() {
-    folders.forEach((folder, index) => {
-        const angle = index * angleStep;
-        // Transformasi baru untuk membuat folder selalu menghadap ke depan
-        folder.style.transform = `rotateY(${angle}deg) translateZ(300px) rotateY(-${angle}deg)`;
-        folder.style.opacity = '1';
-        folder.style.transition = 'transform 1s ease, opacity 0.5s ease';
-
-        folder.addEventListener('click', () => {
-            currentAngkatan = folder.textContent;
-            if (nostalgiaAngkatan[currentAngkatan] && nostalgiaAngkatan[currentAngkatan].length > 0) {
-                tampilkanSlideShow();
-            } else {
-                alert(`Maaf, belum ada foto untuk ${currentAngkatan}`);
-            }
-        });
-    });
-}
-
-function rotateCarousel(direction) {
-    currentAngle += angleStep * direction;
-    carousel.style.transform = `translateZ(-300px) rotateY(${currentAngle}deg)`;
-    
-    // Perbarui transformasi setiap folder untuk tetap menghadap ke depan
-    folders.forEach((folder, index) => {
-        const angle = index * angleStep - currentAngle;
-        folder.style.transform = `rotateY(${angle}deg) translateZ(300px) rotateY(-${angle}deg)`;
-    });
-}
-
-function tampilkanSlideShow() {
-    const carousel = document.getElementById('carousel');
-    carousel.innerHTML = '';
-
-    const img = document.createElement('img');
-    img.src = nostalgiaAngkatan[currentAngkatan][currentSlideIndex];
-    img.className = 'slideshow-img';
-
-    const backBtn = document.createElement('button');
-    backBtn.textContent = '◀';
-    backBtn.className = 'nav-btn kiri';
-    backBtn.onclick = () => {
-        currentSlideIndex = (currentSlideIndex - 1 + nostalgiaAngkatan[currentAngkatan].length) % nostalgiaAngkatan[currentAngkatan].length;
-        img.src = nostalgiaAngkatan[currentAngkatan][currentSlideIndex];
-    };
-
-    const nextBtn = document.createElement('button');
-    nextBtn.textContent = '▶';
-    nextBtn.className = 'nav-btn kanan';
-    nextBtn.onclick = () => {
-        currentSlideIndex = (currentSlideIndex + 1) % nostalgiaAngkatan[currentAngkatan].length;
-        img.src = nostalgiaAngkatan[currentAngkatan][currentSlideIndex];
-    };
-
-    const backToFolders = document.createElement('button');
-    backToFolders.textContent = '🔙 Kembali ke Folder';
-    backToFolders.className = 'back-btn';
-    backToFolders.onclick = () => location.reload();
-
-    carousel.appendChild(backBtn);
-    carousel.appendChild(img);
-    carousel.appendChild(nextBtn);
-    carousel.appendChild(backToFolders);
-}
-
 
 let musikNyala = false;
 let musikManual = false;
@@ -389,13 +316,13 @@ startBtn.addEventListener('click', () => {
             document.getElementById('scrollHint').classList.add('visible');
 
         }
-
+        document.getElementById('carouselSection').style.display = 'block';
+        document.getElementById('carouselSection').classList.add('show');
+        setFolder3DLayout();
     } catch (error) {
         console.log(error.message);
     }
-    document.getElementById('carouselSection').style.display = 'block';
-    document.getElementById('carouselSection').classList.add('show');
-    setFolder3DLayout();    
+       
 });
 
 window.addEventListener('scroll', () => {
@@ -421,16 +348,63 @@ tontonBtn.addEventListener('click', () => {
 });
 
 selesaiBtn.addEventListener('click', () => {
-    const video = document.getElementById('videoKenangan');
-    video.pause();
-    video.currentTime = 0;
+
+    videoWrapper.style.display = 'none';
+
     audio.currentTime = 0;
     audio.play().catch(err => console.log('Gagal mainkan musik ulang:', err));
     musikNyala = true;
     musicBtn.textContent = 'Musik: OFF';
 })
 
-window.addEventListener('DOMContentLoaded', () => {
-    setFolder3DLayout(); 
-    updateFolders();
+window.addEventListener('DOMContentLoaded', () => { 
 });
+
+let carouselAngle = 0;
+const folderList = [
+    "2024-2027", "2023-2026", "2022-2025",
+    "2021-2024", "2020-2023", "2019-2022"
+];
+
+function setFolder3DLayout() {
+    const container = document.getElementById('carouselContainer');
+    if (!container) return;
+
+    container.innerHTML = '';
+    const total = folderList.length;
+    const angleStep = 360 / total;
+
+    folderList.forEach((angkatan, i) => {
+        const el = document.createElement('div');
+        el.className = 'folder';
+        el.textContent = `Angkatan ${angkatan}`;
+        const angle = angleStep * i;
+        el.style.transform = `
+            rotateY(${angle}deg)
+            translateZ(300px)
+        `;
+        container.appendChild(el);
+    });
+
+    rotateCarousel(0);
+}
+
+function rotateCarousel(direction) {
+    const step = 360 / folderList.length;
+    carouselAngle += step * direction;
+    updateFolders();
+}
+
+function updateFolders() {
+    const folders = document.querySelectorAll('.folder');
+    const total = folders.length;
+    const angleStep = 360 / total;
+
+    folders.forEach((folder, i) => {
+        const angle = angleStep * i + carouselAngle;
+        folder.style.transform = `
+            rotateY(${angle}deg)
+            translateZ(300px)
+        `;
+    });
+}

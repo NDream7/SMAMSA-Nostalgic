@@ -6,13 +6,6 @@
     <meta name="description" content="Web Nostalgia Alumni SMAMSA">
     <title>SMAMSA Nostalgic</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="icon" href="favicom.png" type="image/png">
-    <style>
-        .carousel-container {
-            perspective: 1000px;
-            overflow: visible;
-        }
-    </style>
 </head>
 <body class="no-scroll">
     
@@ -26,20 +19,13 @@
     </div>
 
     <section id="carouselSection" style="display: none;">
-        <h2>Nostalgia dari angkatan berapa niicchh</h2>
-        <div class="carousel-container">
-            <div class="carousel" id="carousel">
-                <div class="folder">Angkatan 2022-2025</div>
-                <div class="folder">Angkatan 2021-2024</div>
-                <div class="folder">Angkatan 2020-2023</div>
-                <div class="folder">Angkatan 2019-2022</div>
-                <div class="folder">Angkatan 2024-2027</div>
-                <div class="folder">Angkatan 2023-2026</div>
-            </div>    
-        </div>
+        <h2>✨ Nostalgia Angkatan ✨</h2>
+        <div class="carousel-wrapper">
+        <div class="carousel-container" id="carouselContainer"></div>
         <div class="controls">
-            <button onclick="rotateCarousel(-1)">◀ Kiri</button>
-            <button onclick="rotateCarousel(1)">Kanan ▶</button>
+            <button onclick="rotateCarousel(-1)">⬅️ Geser Kiri</button>
+            <button onclick="rotateCarousel(1)">➡️ Geser Kanan</button>
+        </div>
         </div>
     </section>
 
