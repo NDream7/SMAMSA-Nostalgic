@@ -366,6 +366,18 @@ const folderList = [
   "2021-2024", "2020-2023", "2019-2022"
 ];
 
+const fotoKenangan = {
+    "2024-2027": [],
+    "2023-2026": [],
+    "2022-2025": Array.from({ length: 171 }, (_, i) => {
+    const n = i + 1;
+    return `2022/${n}.${n <= 2 ? 'JPG' : 'jpg'}`;
+    }),
+    "2021-2024": [],
+    "2020-2023": [],
+    "2019-2022": []
+};
+
 let carouselAngle = 0;
 
 function setFolder3DLayout() {
@@ -377,6 +389,9 @@ function setFolder3DLayout() {
     const el = document.createElement('div');
     el.className = 'folder';
     el.textContent = `Angkatan ${angkatan}`;
+    el.onclick = () => bukaFolder(angkatan);
+    const angle = step * i;
+    el.style.transform = `rotateY(${angle}deg) translateZ(300px)`;
     container.appendChild(el);
   });
 
@@ -409,6 +424,33 @@ function updateCarouselRotation() {
       folder.classList.remove('highlight');
     }
   });
+}
+
+function bukaFolder(angkatan) {
+  const modal = document.getElementById("folderModal");
+  const judul = document.getElementById("judulModal");
+  const isi = document.getElementById("isiFolder");
+
+  judul.textContent = `Kenangan Angkatan ${angkatan}`;
+  isi.innerHTML = '';
+
+  const fotoList = fotoKenangan[angkatan] || [];
+  if (fotoList.length === 0) {
+    isi.innerHTML = '<p>Belum ada foto untuk angkatan ini.</p>';
+  } else {
+    fotoList.forEach(src => {
+      const img = document.createElement("img");
+      img.src = src;
+      img.alt = `Foto ${angkatan}`;
+      isi.appendChild(img);
+    });
+  }
+
+  modal.style.display = "flex";
+}
+
+function tutupModal() {
+  document.getElementById("folderModal").style.display = "none";
 }
 
 window.addEventListener('DOMContentLoaded', setFolder3DLayout);
