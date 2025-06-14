@@ -463,7 +463,9 @@ function tutupModal() {
 
   folderModal.style.display = "none";
 
-  if (zoomModal.style.display === "none") {
+  const zoomSedangTerbuka = zoomModal.offsetParent !== null;
+
+  if (!zoomSedangTerbuka) {
     document.getElementById("musicBtn").style.display = "block";
   }
 }
@@ -481,11 +483,14 @@ function bukaZoom(src) {
 }
 
 function tutupZoom() {
-  document.getElementById("zoomModal").style.display = "none";
-
+  const zoomModal = document.getElementById("zoomModal");
   const folderModal = document.getElementById("folderModal");
 
-  if (folderModal.style.display === "none") {
+  zoomModal.style.display = "none";
+
+  const folderSedangTerbuka = folderModal.offsetParent !== null;
+
+  if (!folderSedangTerbuka) {
     document.getElementById("musicBtn").style.display = "block";
   }
 }
