@@ -8,6 +8,7 @@ body {
 }
 body.no-scroll {
     overflow: hidden;
+    touch-action: none;
 }
 
 
@@ -489,8 +490,8 @@ button:hover {
   }
 
   #musicBtn {
-    font-size: 18px;
-    padding: 12px 16px;
+    font-size: 12px;
+    padding: 8px 10px;
   }
 
   .arrow {
