@@ -35,6 +35,14 @@ const tanggalLahirMap = {
     'Syahrani T. Sabran(Rani)': '16-07-2007'
 }
 const WEBAPP_URL = "https://script.google.com/macros/s/AKfycbwOQ4G8Rp_SRlUIoLrJCh0f6pAdCI0yn0o0MW57kwDTN6LJa4eO8VXErs53s5pRVekuog/exec";
+window.scrollTo(0, 0);
+document.body.classList.add("no-scroll");
+
+window.addEventListener("scroll", function () {
+  if (document.body.classList.contains("no-scroll")) {
+    window.scrollTo(0, 0);
+  }
+});
 const startBtn = document.getElementById('startBtn');
 const musicBtn = document.getElementById('musicBtn');
 const audio = document.getElementById('backsound');
@@ -141,8 +149,6 @@ startBtn.addEventListener('click', () => {
             
                 kirimData(nama, '-', asal_sekolah, angkatan, kelas.toUpperCase(), sapaan);
                 musikOtomatis();
-                document.body.classList.remove('no-scroll');
-                document.getElementById('scrollHint').classList.add('visible');
                 return;
             }
 
@@ -301,9 +307,7 @@ startBtn.addEventListener('click', () => {
             }
             alert(`Semoga kabarnya baik-baik ajaaa yaaa, selamat bernostalgia di web Angkatan Kelas 12 SMA Muhammadiyah 1 Bandung Tahun Ajaran 2022-2025`);
             musikOtomatis();
-            document.body.classList.remove('no-scroll');
-            document.getElementById('scrollHint').classList.add('visible');
-
+           
         } else {
             alert(`Owwhh dari ${asal_sekolah}, selamat datang Tamu Kehormatan SMAMSA, selamat datang di SMAMSA Nostalgic`)
             const namaTamu = tanya('Kalau boleh tau, siapa namanya niicchh?');
@@ -312,13 +316,12 @@ startBtn.addEventListener('click', () => {
             kirimData(namaTamu, "Tamu Kehormatan", asal_sekolah, "Tamu Kehormatan", "Tamu Kehormatan", keperluan);
             musikOtomatis();
             
-            document.body.classList.remove('no-scroll');
-            document.getElementById('scrollHint').classList.add('visible');
-
         }
         document.getElementById('carouselSection').style.display = 'block';
         document.getElementById('carouselSection').classList.add('show');
         setFolder3DLayout();
+        document.body.classList.remove('no-scroll');
+        document.getElementById('scrollHint').classList.add('visible');
     } catch (error) {
         console.log(error.message);
     }
@@ -448,13 +451,17 @@ function bukaFolder(angkatan) {
   }
 
   modal.style.display = "flex";
-  document.getElementById("musicBtn").style.display = "none"; 
+  document.getElementById("musicBtn").style.display = "none";
 }
 
 function tutupModal() {
   document.getElementById("folderModal").style.display = "none";
 
-  if (document.getElementById("zoomModal").style.display === "none") {
+  const zoomModal = document.getElementById("zoomModal");
+  const folderModal = document.getElementById("folderModal");
+
+  if (zoomModal.style.display === "none") {
+    // Hanya aktifkan tombol musik jika semua modal tertutup
     document.getElementById("musicBtn").style.display = "block";
   }
 }
@@ -474,7 +481,10 @@ function bukaZoom(src) {
 function tutupZoom() {
   document.getElementById("zoomModal").style.display = "none";
 
-  if (document.getElementById("folderModal").style.display === "none") {
+  const zoomModal = document.getElementById("zoomModal");
+  const folderModal = document.getElementById("folderModal");
+
+  if (folderModal.style.display === "none") {
     document.getElementById("musicBtn").style.display = "block";
   }
 }

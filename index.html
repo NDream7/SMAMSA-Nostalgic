@@ -8,13 +8,6 @@
     <link rel="stylesheet" href="style.css">
 </head>
 
-<div id="zoomModal" class="zoom-overlay">
-  <span class="close" onclick="tutupZoom()">&times;</span>
-  <div class="zoom-wrapper">
-    <img id="zoomedImg" class="zoomed-img" src="" alt="">
-  </div>
-</div>
-
 <body class="no-scroll">
     
     <div class="logo-container">
@@ -78,6 +71,13 @@
             <span class="close" onclick="tutupModal()">&times;</span>
             <h3 id="judulModal"></h3>
             <div id="isiFolder" class="foto-grid"></div>
+        </div>
+    </div>
+
+    <div id="zoomModal" class="zoom-overlay">
+        <span class="close" onclick="tutupZoom()">&times;</span>
+        <div class="zoom-wrapper">
+            <img id="zoomedImg" class="zoomed-img" src="" alt="">
         </div>
     </div>
 
