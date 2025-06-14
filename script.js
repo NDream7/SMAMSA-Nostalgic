@@ -354,6 +354,9 @@ selesaiBtn.addEventListener('click', () => {
 
     videoWrapper.style.display = 'none';
 
+    const iframe = document.getElementById('videoKenangan');
+    iframe.src = iframe.src;
+
     audio.currentTime = 0;
     audio.play().catch(err => console.log('Gagal mainkan musik ulang:', err));
     musikNyala = true;
