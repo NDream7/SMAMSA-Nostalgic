@@ -458,13 +458,12 @@ function bukaFolder(angkatan) {
 }
 
 function tutupModal() {
-  document.getElementById("folderModal").style.display = "none";
-
-  const zoomModal = document.getElementById("zoomModal");
   const folderModal = document.getElementById("folderModal");
+  const zoomModal = document.getElementById("zoomModal");
+
+  folderModal.style.display = "none";
 
   if (zoomModal.style.display === "none") {
-    // Hanya aktifkan tombol musik jika semua modal tertutup
     document.getElementById("musicBtn").style.display = "block";
   }
 }
@@ -484,7 +483,6 @@ function bukaZoom(src) {
 function tutupZoom() {
   document.getElementById("zoomModal").style.display = "none";
 
-  const zoomModal = document.getElementById("zoomModal");
   const folderModal = document.getElementById("folderModal");
 
   if (folderModal.style.display === "none") {
