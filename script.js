@@ -442,15 +442,41 @@ function bukaFolder(angkatan) {
       const img = document.createElement("img");
       img.src = src;
       img.alt = `Foto ${angkatan}`;
+      img.onclick = () => bukaZoom(src);
       isi.appendChild(img);
     });
   }
 
   modal.style.display = "flex";
+  document.getElementById("musicBtn").style.display = "none"; 
 }
 
 function tutupModal() {
   document.getElementById("folderModal").style.display = "none";
+
+  if (document.getElementById("zoomModal").style.display === "none") {
+    document.getElementById("musicBtn").style.display = "block";
+  }
+}
+
+function bukaZoom(src) {
+  const zoomModal = document.getElementById("zoomModal");
+  const zoomedImg = document.getElementById("zoomedImg");
+
+  zoomedImg.src = src;
+  zoomedImg.classList.add("animate");
+  setTimeout(() => zoomedImg.classList.remove("animate"), 300);
+
+  zoomModal.style.display = "flex";
+  document.getElementById("musicBtn").style.display = "none";
+}
+
+function tutupZoom() {
+  document.getElementById("zoomModal").style.display = "none";
+
+  if (document.getElementById("folderModal").style.display === "none") {
+    document.getElementById("musicBtn").style.display = "block";
+  }
 }
 
 window.addEventListener('DOMContentLoaded', setFolder3DLayout);
