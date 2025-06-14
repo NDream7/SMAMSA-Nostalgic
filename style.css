@@ -492,6 +492,7 @@ button:hover {
   #musicBtn {
     font-size: 12px;
     padding: 8px 10px;
+    top: 100px;
   }
 
   .arrow {
