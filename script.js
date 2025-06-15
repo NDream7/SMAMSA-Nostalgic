@@ -69,7 +69,7 @@ const nostalgiaAngkatan = {
     "Angkatan 2020-2023": [
 
     ],
-    "Kenangan Acara": [
+    "Kenangan Acara SMAMSA": [
 
     ],
     "Angkatan 2024-2027": [
@@ -403,7 +403,7 @@ function setFolder3DLayout() {
   folderList.forEach((angkatan, i) => {
     const el = document.createElement('div');
     el.className = 'folder';
-    el.textContent = `Angkatan ${angkatan}`;
+    el.textContent = angkatan === "Kenangan Acara SMAMSA" ? angkatan : `Angkatan ${angkatan}`;
     el.onclick = () => bukaFolder(angkatan);
     const angle = step * i;
     el.style.transform = `rotateY(${angle}deg) translateZ(300px)`;
@@ -492,23 +492,6 @@ function bukaFolder(angkatan) {
   document.body.classList.add("no-scroll");
 }
 
-  tombolLanjut.style.display = (posisiSekarang < fotoAktif.length) ? "block" : "none";
-
-  modal.style.display = "flex";
-  document.getElementById("musicBtn").style.display = "none";
-  document.body.classList.add("no-scroll");
-
-
-function tutupModal() {
-  document.getElementById("folderModal").style.display = "none";
-
-  const zoomModal = document.getElementById("zoomModal");
-  if (zoomModal.offsetParent === null) {
-    document.getElementById("musicBtn").style.display = "block";
-  }
-  document.body.classList.remove("no-scroll");
-}
-
 function tutupModal() {
   document.getElementById("folderModal").style.display = "none";
   document.body.classList.remove("no-scroll");
@@ -518,14 +501,31 @@ function tutupModal() {
     document.getElementById("musicBtn").style.display = "block";
     document.getElementById("volumeSlider").style.display = "block";
   }
+  document.body.classList.remove("no-scroll");
+}
+
+function bukaZoom(src) {
+  const zoomModal = document.getElementById("zoomModal");
+  const zoomedImg = document.getElementById("zoomedImg");
+
+  zoomedImg.src = src;
+  zoomedImg.style.transform = "scale(1) translate(0px, 0px)";
+  zoomModal.style.display = "flex";
+
+  currentScale = 1;
+  translateX = 0;
+  translateY = 0;
 }
 
 function tutupZoom() {
-  document.getElementById("zoomModal").style.display = "none";
+  const zoomModal = document.getElementById("zoomModal");
+  const folderModal = document.getElementById("folderModal");
+
+  zoomModal.style.display = "none";
   resetZoom();
 
-  const folderModal = document.getElementById("folderModal");
-  if (folderModal.offsetParent === null) {
+  const folderSedangTerbuka = folderModal.offsetParent !== null;
+  if (folderSedangTerbuka) {
     document.getElementById("musicBtn").style.display = "none";
     document.getElementById("volumeSlider").style.display = "none";
   }
@@ -638,11 +638,6 @@ function toggleResetBtn() {
   } else {
     resetZoomBtn.style.display = "none";
   }
-}
-
-function tutupZoom() {
-  document.getElementById("zoomModal").style.display = "none";
-  resetZoom();
 }
 
 function preloadSemuaFoto() {
