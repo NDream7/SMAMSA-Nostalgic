@@ -67,7 +67,13 @@ const nostalgiaAngkatan = {
     ],
     
 };
-
+let fotoAktif = [];
+let posisiSekarang = 0;
+const batchUkuran = 50;
+const fotoCache = {}; 
+const batchStatus = {};
+let batchProgress = {};
+let angkatanAktif = "";
 
 let musikNyala = false;
 let musikManual = false;
@@ -373,12 +379,9 @@ const folderList = [
 ];
 
 const fotoKenangan = {
-    "2024-2027": [],
-    "2023-2026": [],
-    "2022-2025": Array.from({ length: 171 }, (_, i) => {
-    const n = i + 1;
-    return `2022/${n}.${n <= 2 ? 'JPG' : 'jpg'}`;
-    }),
+    "2024-2027": Array.from({ length: 111 }, (_, i) => `2024/${i + 1}.webp`),
+    "2023-2026": Array.from({ length: 7 }, (_, i) => `2023/${i + 1}.webp`),
+    "2022-2025": Array.from({ length: 516 }, (_, i) => `2022/${i + 1}.webp`),
     "2021-2024": [],
     "2020-2023": [],
     "2019-2022": []
@@ -433,41 +436,81 @@ function updateCarouselRotation() {
 }
 
 function bukaFolder(angkatan) {
+  angkatanAktif = angkatan;
+
   const modal = document.getElementById("folderModal");
   const judul = document.getElementById("judulModal");
   const isi = document.getElementById("isiFolder");
+  const tombolLanjut = document.getElementById("lihatLebihBanyakBtn");
 
   judul.textContent = `Kenangan Angkatan ${angkatan}`;
-  isi.innerHTML = '';
+  isi.innerHTML = "";
 
-  const fotoList = fotoKenangan[angkatan] || [];
-  if (fotoList.length === 0) {
-    isi.innerHTML = '<p>Belum ada foto untuk angkatan ini.</p>';
+  fotoAktif = fotoKenangan[angkatan] || [];
+  posisiSekarang = batchProgress[angkatan] || 0;
+
+  if (fotoCache[angkatan]) {
+    isi.appendChild(fotoCache[angkatan]); 
   } else {
-    fotoList.forEach(src => {
-      const img = document.createElement("img");
-      img.src = src;
-      img.alt = `Foto ${angkatan}`;
-      img.onclick = () => bukaZoom(src);
-      isi.appendChild(img);
-    });
+    const container = document.createElement("div");
+    container.className = "foto-grid";
+    isi.appendChild(container);
+    fotoCache[angkatan] = container;
+
+    tampilkanBatchFoto();
   }
+
+  tombolLanjut.style.display = (posisiSekarang < fotoAktif.length) ? "block" : "none";
 
   modal.style.display = "flex";
   document.getElementById("musicBtn").style.display = "none";
+  document.body.classList.add("no-scroll");
+}
+
+function tampilkanBatchFoto() {
+  const container = fotoCache[angkatanAktif];
+  const akhir = Math.min(posisiSekarang + batchUkuran, fotoAktif.length);
+  const floatingLoading = document.getElementById("floatingLoading");
+
+  floatingLoading.style.display = "block";
+
+  const promises = [];
+
+  for (let i = posisiSekarang; i < akhir; i++) {
+    const img = document.createElement("img");
+    img.src = fotoAktif[i];
+    img.alt = `Foto ${angkatanAktif}`;
+    img.loading = "lazy";
+    img.onclick = () => bukaZoom(fotoAktif[i]);
+
+    const promise = new Promise(resolve => {
+      img.onload = () => resolve();
+      img.onerror = () => resolve();
+    });
+
+    promises.push(promise);
+    container.appendChild(img);
+  }
+
+  posisiSekarang = akhir;
+  batchProgress[angkatanAktif] = posisiSekarang;
+
+  const tombolLanjut = document.getElementById("lihatLebihBanyakBtn");
+  tombolLanjut.style.display = (posisiSekarang < fotoAktif.length) ? "block" : "none";
+
+  Promise.all(promises).then(() => {
+    floatingLoading.style.display = "none";
+  });
 }
 
 function tutupModal() {
-  const folderModal = document.getElementById("folderModal");
+  document.getElementById("folderModal").style.display = "none";
+
   const zoomModal = document.getElementById("zoomModal");
-
-  folderModal.style.display = "none";
-
-  const zoomSedangTerbuka = zoomModal.offsetParent !== null;
-
-  if (!zoomSedangTerbuka) {
+  if (zoomModal.offsetParent === null) {
     document.getElementById("musicBtn").style.display = "block";
   }
+  document.body.classList.remove("no-scroll");
 }
 
 function bukaZoom(src) {
@@ -491,8 +534,20 @@ function tutupZoom() {
   const folderSedangTerbuka = folderModal.offsetParent !== null;
 
   if (!folderSedangTerbuka) {
-    document.getElementById("musicBtn").style.display = "block";
+    document.getElementById("musicBtn").style.display = "none";
   }
 }
 
+function preloadSemuaFoto() {
+  Object.values(fotoKenangan).forEach(daftarFoto => {
+    daftarFoto.forEach(src => {
+      const img = new Image();
+      img.src = src;
+    });
+  });
+}
+
 window.addEventListener('DOMContentLoaded', setFolder3DLayout);
+window.addEventListener("DOMContentLoaded", () => {
+  preloadSemuaFoto();
+});
