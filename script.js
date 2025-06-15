@@ -56,7 +56,7 @@ const nostalgiaAngkatan = {
     "Angkatan 2020-2023": [
 
     ],
-    "Angkatan 2019-2022": [
+    "Kenangan Acara": [
 
     ],
     "Angkatan 2024-2027": [
@@ -375,16 +375,16 @@ window.addEventListener('DOMContentLoaded', () => {
 const container = document.getElementById('carouselContainer');
 const folderList = [
   "2024-2027", "2023-2026", "2022-2025",
-  "2021-2024", "2020-2023", "2019-2022"
+  "2021-2024", "2020-2023", "Kenangan Acara SMAMSA"
 ];
 
 const fotoKenangan = {
+    "Kenangan Acara SMAMSA" : Array.from({ length: 611 }, (_, i) => `Acara/${i + 1}.webp`),
     "2024-2027": Array.from({ length: 111 }, (_, i) => `2024/${i + 1}.webp`),
     "2023-2026": Array.from({ length: 7 }, (_, i) => `2023/${i + 1}.webp`),
     "2022-2025": Array.from({ length: 516 }, (_, i) => `2022/${i + 1}.webp`),
     "2021-2024": [],
-    "2020-2023": [],
-    "2019-2022": []
+    "2020-2023": []
 };
 
 let carouselAngle = 0;
@@ -536,6 +536,122 @@ function tutupZoom() {
   if (!folderSedangTerbuka) {
     document.getElementById("musicBtn").style.display = "none";
   }
+  document.getElementById("zoomModal").style.display = "none";
+  resetZoom();
+}
+
+let scale = 1;
+let isDragging = false;
+let startX, startY, currentX = 0, currentY = 0;
+
+const zoomedImg = document.getElementById("zoomedImg");
+const zoomWrapper = document.querySelector(".zoom-wrapper");
+const resetZoomBtn = document.getElementById("resetZoomBtn");
+
+zoomWrapper.addEventListener("wheel", (e) => {
+  e.preventDefault();
+  const delta = Math.sign(e.deltaY);
+  scale += delta * -0.1;
+  scale = Math.min(Math.max(1, scale), 4);
+  updateTransform();
+  toggleResetBtn();
+});
+
+zoomedImg.addEventListener("dblclick", () => {
+  scale = scale === 1 ? 2 : 1;
+  currentX = 0;
+  currentY = 0;
+  updateTransform();
+  toggleResetBtn();
+});
+
+zoomedImg.addEventListener("mousedown", (e) => {
+  if (e.button === 0) { 
+    e.preventDefault(); 
+    isDragging = true;
+    startX = e.clientX - currentX;
+    startY = e.clientY - currentY;
+    zoomedImg.style.cursor = "grabbing";
+  }
+});
+
+window.addEventListener("mouseup", () => {
+  if (isDragging) {
+    isDragging = false;
+    zoomedImg.style.cursor = "grab";
+  }
+});
+
+window.addEventListener("mousemove", (e) => {
+  if (!isDragging) return;
+  currentX = e.clientX - startX;
+  currentY = e.clientY - startY;
+  updateTransform();
+});
+
+let initialDistance = null;
+
+zoomWrapper.addEventListener("touchmove", (e) => {
+  if (e.touches.length === 2) {
+    e.preventDefault();
+    const dx = e.touches[0].clientX - e.touches[1].clientX;
+    const dy = e.touches[0].clientY - e.touches[1].clientY;
+    const dist = Math.sqrt(dx * dx + dy * dy);
+
+    if (initialDistance === null) initialDistance = dist;
+
+    let newScale = scale * (dist / initialDistance);
+    scale = Math.min(Math.max(1, newScale), 4);
+    updateTransform();
+    toggleResetBtn();
+  }
+});
+zoomWrapper.addEventListener("touchend", () => {
+  initialDistance = null;
+});
+
+zoomedImg.addEventListener("touchstart", (e) => {
+  if (e.touches.length === 1) {
+    startX = e.touches[0].clientX - currentX;
+    startY = e.touches[0].clientY - currentY;
+    isDragging = true;
+  }
+});
+
+zoomedImg.addEventListener("touchmove", (e) => {
+  if (!isDragging) return;
+  currentX = e.touches[0].clientX - startX;
+  currentY = e.touches[0].clientY - startY;
+  updateTransform();
+});
+
+zoomedImg.addEventListener("touchend", () => {
+  isDragging = false;
+});
+
+function resetZoom() {
+  scale = 1;
+  currentX = 0;
+  currentY = 0;
+  updateTransform();
+  toggleResetBtn();
+}
+
+function updateTransform() {
+  zoomedImg.style.transform = `scale(${scale}) translate(${currentX / scale}px, ${currentY / scale}px)`;
+}
+
+function toggleResetBtn() {
+  if (scale !== 1 || currentX !== 0 || currentY !== 0) {
+    resetZoomBtn.style.display = "block";
+  } else {
+    resetZoomBtn.style.display = "none";
+  }
+}
+
+function tutupZoom() {
+  document.getElementById("zoomModal").style.display = "none";
+  resetZoom();
 }
 
 function preloadSemuaFoto() {
