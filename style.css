@@ -9,6 +9,7 @@ body {
 body.no-scroll {
     overflow: hidden;
     touch-action: none;
+    height: 100vh;
 }
 
 
@@ -174,6 +175,8 @@ h1 {
   align-items: center;
   padding: 16px;
   box-sizing: border-box;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .modal-content {
@@ -190,13 +193,19 @@ h1 {
 }
 
 .modal .close {
-  position: absolute;
+  position: fixed;
   top: 12px;
   right: 16px;
   font-size: 28px;
   font-weight: bold;
   color: #333;
+  background-color: white;
+  padding: 4px 12px;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
   cursor: pointer;
+  z-index: 10001;
 }
 
 #isiFolder {
@@ -221,6 +230,27 @@ h1 {
   #isiFolder img:hover {
     transform: scale(1.05);
   }
+
+#floatingLoading {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 18px;
+  font-weight: bold;
+  color: #444;
+  background: none;
+  z-index: 1000;
+  pointer-events: none; /* ⬅️ ini penting */
+  animation: blink 1.2s infinite;
+  text-align: center;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
 
 .foto-grid {
   display: flex;
@@ -423,6 +453,13 @@ button:hover {
     overflow-y: auto;
     padding: 16px;
     box-sizing: border-box;
+  }
+
+  .modal .close {
+    font-size: 24px;
+    top: 16px;
+    right: 12px;
+    padding: 6px 10px;
   }
 
   #isiFolder {
