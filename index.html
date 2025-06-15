@@ -22,7 +22,6 @@
     <section id="carouselSection" style="display: none;">
         <h2>✨ Koleksi Nostalgia Angkatan ✨</h2>
         <div class="carousel-container" id="carouselContainer">
-            <!-- Folder cards dimuat dari JS -->
         </div>
         <div class="controls">
             <button onclick="rotateCarousel(-1)">⬅️ Geser Kiri</button>
@@ -31,7 +30,7 @@
     </section>
 
 
-    <audio id="backsound" src="mars smamsa.mp3" loop></audio>   
+    <audio id="backsound" src="Nostalgia.mp3" loop></audio>   
     
     <main class="container">    
         <h1>HAAAIII Selamat Datang di Web Nostalgia <br>
@@ -43,6 +42,7 @@
     </main>
 
     <button id="musicBtn">Musik: ON</button>
+    <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="0.5">
     
     <div id="scrollHint">
         <span class="arrow left">⬇️</span>

@@ -81,6 +81,17 @@ h1 {
 #musicBtn:hover{
     background-color: #e0e0e0;
 }
+
+#volumeSlider {
+  position: fixed;
+  top: 68px; 
+  right: 20px;
+  width: 100px;
+  z-index: 1000;
+  display: block;
+}
+
+
 #scrollHint {
     position: fixed;
     bottom: 60px;
@@ -544,6 +555,15 @@ button:hover {
     right: 20px;
     font-size: 14px;
     padding: 8px 12px;
+  }
+
+  #volumeSlider {
+    position: fixed;
+    top: 68px; /* sedikit di bawah #musicBtn */
+    right: 20px;
+    width: 100px;
+    z-index: 1000;
+    display: block;
   }
 
   .arrow {

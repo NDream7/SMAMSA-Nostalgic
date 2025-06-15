@@ -46,7 +46,20 @@ window.addEventListener("scroll", function () {
 const startBtn = document.getElementById('startBtn');
 const musicBtn = document.getElementById('musicBtn');
 const audio = document.getElementById('backsound');
+const clickSound = new Audio('geser folder.mp3');
+clickSound.volume = 0.5;
+const openSound = new Audio('buka folder.mp3');
+openSound.volume = 0.6;
+const volumeSlider = document.getElementById('volumeSlider');
+audio.volume = parseFloat(volumeSlider.value);
+volumeSlider.addEventListener('input', () => {
+  audio.volume = parseFloat(volumeSlider.value);
+});
+
 const nostalgiaAngkatan = {
+    "Angkatan 2023-2026": [
+
+    ],
     "Angkatan 2022-2025": [
 
     ],
@@ -62,18 +75,11 @@ const nostalgiaAngkatan = {
     "Angkatan 2024-2027": [
 
     ],
-    "Angkatan 2023-2026": [
-
-    ],
+    
     
 };
 let fotoAktif = [];
-let posisiSekarang = 0;
-const batchUkuran = 50;
 const fotoCache = {}; 
-const batchStatus = {};
-let batchProgress = {};
-let angkatanAktif = "";
 
 let musikNyala = false;
 let musikManual = false;
@@ -374,8 +380,8 @@ window.addEventListener('DOMContentLoaded', () => {
 
 const container = document.getElementById('carouselContainer');
 const folderList = [
-  "2024-2027", "2023-2026", "2022-2025",
-  "2021-2024", "2020-2023", "Kenangan Acara SMAMSA"
+  "Kenangan Acara SMAMSA", "2024-2027", "2023-2026",
+  "2022-2025", "2021-2024", "2020-2023", 
 ];
 
 const fotoKenangan = {
@@ -411,6 +417,8 @@ function rotateCarousel(direction) {
   const step = 360 / folderList.length;
   carouselAngle += direction * step;
   updateCarouselRotation();
+  clickSound.currentTime = 0;
+  clickSound.play().catch(() => {});
 }
 
 function updateCarouselRotation() {
@@ -441,67 +449,55 @@ function bukaFolder(angkatan) {
   const modal = document.getElementById("folderModal");
   const judul = document.getElementById("judulModal");
   const isi = document.getElementById("isiFolder");
-  const tombolLanjut = document.getElementById("lihatLebihBanyakBtn");
+
+  openSound.currentTime = 0;
+  openSound.play().catch(() => {});
 
   judul.textContent = `Kenangan Angkatan ${angkatan}`;
   isi.innerHTML = "";
 
   fotoAktif = fotoKenangan[angkatan] || [];
-  posisiSekarang = batchProgress[angkatan] || 0;
 
   if (fotoCache[angkatan]) {
-    isi.appendChild(fotoCache[angkatan]); 
+    isi.appendChild(fotoCache[angkatan]);
   } else {
     const container = document.createElement("div");
     container.className = "foto-grid";
     isi.appendChild(container);
     fotoCache[angkatan] = container;
 
-    tampilkanBatchFoto();
+    const floatingLoading = document.getElementById("floatingLoading");
+    floatingLoading.style.display = "block";
+
+    const promises = fotoAktif.map((src) => {
+      return new Promise((resolve) => {
+        const img = document.createElement("img");
+        img.src = src;
+        img.alt = `Foto ${angkatan}`;
+        img.loading = "lazy";
+        img.onclick = () => bukaZoom(src);
+        img.onload = img.onerror = () => resolve();
+        container.appendChild(img);
+      });
+    });
+
+    Promise.all(promises).then(() => {
+      floatingLoading.style.display = "none";
+    });
   }
+
+  modal.style.display = "flex";
+  document.getElementById("musicBtn").style.display = "none";
+  document.getElementById("volumeSlider").style.display = "none";
+  document.body.classList.add("no-scroll");
+}
 
   tombolLanjut.style.display = (posisiSekarang < fotoAktif.length) ? "block" : "none";
 
   modal.style.display = "flex";
   document.getElementById("musicBtn").style.display = "none";
   document.body.classList.add("no-scroll");
-}
 
-function tampilkanBatchFoto() {
-  const container = fotoCache[angkatanAktif];
-  const akhir = Math.min(posisiSekarang + batchUkuran, fotoAktif.length);
-  const floatingLoading = document.getElementById("floatingLoading");
-
-  floatingLoading.style.display = "block";
-
-  const promises = [];
-
-  for (let i = posisiSekarang; i < akhir; i++) {
-    const img = document.createElement("img");
-    img.src = fotoAktif[i];
-    img.alt = `Foto ${angkatanAktif}`;
-    img.loading = "lazy";
-    img.onclick = () => bukaZoom(fotoAktif[i]);
-
-    const promise = new Promise(resolve => {
-      img.onload = () => resolve();
-      img.onerror = () => resolve();
-    });
-
-    promises.push(promise);
-    container.appendChild(img);
-  }
-
-  posisiSekarang = akhir;
-  batchProgress[angkatanAktif] = posisiSekarang;
-
-  const tombolLanjut = document.getElementById("lihatLebihBanyakBtn");
-  tombolLanjut.style.display = (posisiSekarang < fotoAktif.length) ? "block" : "none";
-
-  Promise.all(promises).then(() => {
-    floatingLoading.style.display = "none";
-  });
-}
 
 function tutupModal() {
   document.getElementById("folderModal").style.display = "none";
@@ -513,31 +509,26 @@ function tutupModal() {
   document.body.classList.remove("no-scroll");
 }
 
-function bukaZoom(src) {
+function tutupModal() {
+  document.getElementById("folderModal").style.display = "none";
+  document.body.classList.remove("no-scroll");
+
   const zoomModal = document.getElementById("zoomModal");
-  const zoomedImg = document.getElementById("zoomedImg");
-
-  zoomedImg.src = src;
-  zoomedImg.classList.add("animate");
-  setTimeout(() => zoomedImg.classList.remove("animate"), 300);
-
-  zoomModal.style.display = "flex";
-  document.getElementById("musicBtn").style.display = "none";
+  if (zoomModal.offsetParent === null) {
+    document.getElementById("musicBtn").style.display = "block";
+    document.getElementById("volumeSlider").style.display = "block";
+  }
 }
 
 function tutupZoom() {
-  const zoomModal = document.getElementById("zoomModal");
-  const folderModal = document.getElementById("folderModal");
-
-  zoomModal.style.display = "none";
-
-  const folderSedangTerbuka = folderModal.offsetParent !== null;
-
-  if (!folderSedangTerbuka) {
-    document.getElementById("musicBtn").style.display = "none";
-  }
   document.getElementById("zoomModal").style.display = "none";
   resetZoom();
+
+  const folderModal = document.getElementById("folderModal");
+  if (folderModal.offsetParent === null) {
+    document.getElementById("musicBtn").style.display = "none";
+    document.getElementById("volumeSlider").style.display = "none";
+  }
 }
 
 let scale = 1;
