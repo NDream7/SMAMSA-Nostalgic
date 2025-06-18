@@ -89,7 +89,6 @@ musicBtn.addEventListener('click', () => {
         audio.pause();
         musicBtn.textContent = 'Musik: ON';
     } else {
-        audio.currentTime = 0;
         audio.play().catch(err => console.log('Gagal mainkan audio:', err));
         musicBtn.textContent = 'Musik: OFF';
         musikManual = true;
@@ -347,29 +346,82 @@ window.addEventListener('scroll', () => {
     }
 });
 
-const tontonBtn = document.getElementById('tontonVideoBtn');
-const selesaiBtn = document.getElementById('selesaiMenontonBtn');
-const videoWrapper = document.getElementById('videoWrapper');
+const tontonBtn2022 = document.getElementById('tontonVideoBtn2022');
+const selesaiBtn2022 = document.getElementById('selesaiMenontonBtn2022');
+const videoWrapper2022 = document.getElementById('videoWrapper2022');
 
-tontonBtn.addEventListener('click', () => {
+tontonBtn2022.addEventListener('click', () => {
     if (musikNyala) {
         audio.pause();
         musikNyala = false;
         musicBtn.textContent = 'Musik: ON';
     }
 
-    videoWrapper.style.display = 'block';
-    videoWrapper.scrollIntoView({ behavior: 'smooth' });
+    videoWrapper2022.style.display = 'block';
+    videoWrapper2022.scrollIntoView({ behavior: 'smooth' });
 });
 
-selesaiBtn.addEventListener('click', () => {
+selesaiBtn2022.addEventListener('click', () => {
 
-    videoWrapper.style.display = 'none';
+    videoWrapper2022.style.display = 'none';
 
-    const iframe = document.getElementById('videoKenangan');
+    const iframe = document.getElementById('videoKenangan2022');
     iframe.src = iframe.src;
 
-    audio.currentTime = 0;
+    audio.play().catch(err => console.log('Gagal mainkan musik ulang:', err));
+    musikNyala = true;
+    musicBtn.textContent = 'Musik: OFF';
+})
+
+const tontonBtn2021 = document.getElementById('tontonVideoBtn2021');
+const selesaiBtn2021 = document.getElementById('selesaiMenontonBtn2021');
+const videoWrapper2021 = document.getElementById('videoWrapper2021');
+
+tontonBtn2021.addEventListener('click', () => {
+    if (musikNyala) {
+        audio.pause();
+        musikNyala = false;
+        musicBtn.textContent = 'Musik: ON';
+    }
+
+    videoWrapper2021.style.display = 'block';
+    videoWrapper2021.scrollIntoView({ behavior: 'smooth' });
+});
+
+selesaiBtn2021.addEventListener('click', () => {
+
+    videoWrapper2021.style.display = 'none';
+
+    const iframe = document.getElementById('videoKenangan2021');
+    iframe.src = iframe.src;
+
+    audio.play().catch(err => console.log('Gagal mainkan musik ulang:', err));
+    musikNyala = true;
+    musicBtn.textContent = 'Musik: OFF';
+})
+
+const tontonBtn2020 = document.getElementById('tontonVideoBtn2020');
+const selesaiBtn2020 = document.getElementById('selesaiMenontonBtn2020');
+const videoWrapper2020 = document.getElementById('videoWrapper2020');
+
+tontonBtn2020.addEventListener('click', () => {
+    if (musikNyala) {
+        audio.pause();
+        musikNyala = false;
+        musicBtn.textContent = 'Musik: ON';
+    }
+
+    videoWrapper2020.style.display = 'block';
+    videoWrapper2020.scrollIntoView({ behavior: 'smooth' });
+});
+
+selesaiBtn2020.addEventListener('click', () => {
+
+    videoWrapper2020.style.display = 'none';
+
+    const iframe = document.getElementById('videoKenangan2020');
+    iframe.src = iframe.src;
+
     audio.play().catch(err => console.log('Gagal mainkan musik ulang:', err));
     musikNyala = true;
     musicBtn.textContent = 'Musik: OFF';
@@ -386,10 +438,10 @@ const folderList = [
 
 const fotoKenangan = {
     "Kenangan Acara SMAMSA" : Array.from({ length: 611 }, (_, i) => `Acara/${i + 1}.webp`),
-    "2024-2027": Array.from({ length: 111 }, (_, i) => `2024/${i + 1}.webp`),
-    "2023-2026": Array.from({ length: 7 }, (_, i) => `2023/${i + 1}.webp`),
+    "2024-2027": Array.from({ length: 495 }, (_, i) => `2024/${i + 1}.webp`),
+    "2023-2026": Array.from({ length: 436 }, (_, i) => `2023/${i + 1}.webp`),
     "2022-2025": Array.from({ length: 516 }, (_, i) => `2022/${i + 1}.webp`),
-    "2021-2024": [],
+    "2021-2024": Array.from({ length: 543 }, (_, i) => `2021/${i + 1}.webp`),
     "2020-2023": []
 };
 

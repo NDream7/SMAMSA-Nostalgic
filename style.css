@@ -385,7 +385,8 @@ h1 {
     margin-bottom: 20px;
     font-size: 24px;
 }
-#tontonVideoBtn, #selesaiMenontonBtn {
+#tontonVideoBtn2022, #tontonVideoBtn2021, #tontonVideoBtn2020, 
+#selesaiMenontonBtn2022, #selesaiMenontonBtn2021, #selesaiMenontonBtn2020 {
     padding: 10px 20px;
     font-size: 18px;
     background-color: #4caf50;
@@ -395,24 +396,28 @@ h1 {
     cursor: pointer;
     transition: background-color 0.3s;
 }
-#tontonVideoBtn:hover, #selesaiMenontonBtn:hover {
+#tontonVideoBtn2022:hover, #tontonVideoBtn2021:hover, #tontonVideoBtn2020:hover, 
+#selesaiMenontonBtn2022:hover, #selesaiMenontonBtn2021:hover, #selesaiMenontonBtn2020:hover {
     background-color: #45a049;
 }
 .video-container {
-    position: relative;
-    width: 100%;
-    padding-bottom: 56.25%;
-    height: 0;
-    overflow: hidden;
-    max-width: 800px;
-    margin: 0 auto;
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
 }
+
 .video-container iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  border: none;
+  border-radius: 12px;
 }
 
 html {
