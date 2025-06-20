@@ -1,4 +1,4 @@
-body {
+html, body {
     margin: 0;
     padding: 0;
     font-family: 'Segoe UI', 'Roboto', sans-serif;
@@ -12,7 +12,9 @@ body.no-scroll {
     height: 100vh;
 }
 
-
+main, section {
+  background-color: transparent;
+}
 
 .logo-container {
     display: flex;
@@ -378,7 +380,7 @@ h1 {
 .konten-kenangan {
     padding: 40px 20px;
     text-align: center;
-    background-color: #f9f9f9;
+    background-color: transparent;
     color: #000;
 }
 .konten-kenangan h2 {
@@ -408,6 +410,7 @@ h1 {
   overflow: hidden;
   border-radius: 12px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+  background-color: white;
 }
 
 .video-container iframe {
@@ -564,7 +567,7 @@ button:hover {
 
   #volumeSlider {
     position: fixed;
-    top: 68px; /* sedikit di bawah #musicBtn */
+    top: 68px; 
     right: 20px;
     width: 100px;
     z-index: 1000;
